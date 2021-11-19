@@ -1,0 +1,1450 @@
+[
+  {
+    "name": "Timestamp",
+    "formatType": "timestamp",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "format": {},
+        "formatType": "timestamp",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "timestamp"
+      }
+    }
+  },
+  {
+    "name": "Customer",
+    "description": "",
+    "formatType": "full_name",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "full_name"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "maritalStatus": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Single",
+            "Married",
+            "Divorced",
+            "Widdowed"
+          ]
+        },
+        "formatType": "prime",
+        "name": "maritalStatus",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "MaritalStatus"
+      },
+      "creditRating": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Bad",
+            "Medium",
+            "Good"
+          ],
+          "valueLabels": [
+            {
+              "label": "Bad",
+              "value": 1
+            },
+            {
+              "label": "Medium",
+              "value": 2
+            },
+            {
+              "label": "Good",
+              "value": 3
+            }
+          ],
+          "max": 3,
+          "min": 1,
+          "severityBad": 1,
+          "severityGood": 3,
+          "severityLevels": 3
+        },
+        "formatType": "severity_level",
+        "name": "creditRating",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "CreditRating"
+      },
+      "gender": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Male",
+            "Female",
+            "Other"
+          ]
+        },
+        "formatType": "prime",
+        "name": "gender",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Gender"
+      },
+      "contactEmail": {
+        "description": "",
+        "format": {},
+        "formatType": "email",
+        "name": "contactEmail",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "ContactEmail"
+      },
+      "ageBracket": {
+        "description": "",
+        "format": {
+          "examples": [
+            "20-39",
+            "40-59",
+            "60-79",
+            "80+"
+          ]
+        },
+        "formatType": "prime",
+        "name": "ageBracket",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "AgeBracket"
+      },
+      "addrTypeMailing": {
+        "description": "",
+        "format": {
+          "examples": [
+            "single family",
+            "apartment",
+            "condo"
+          ]
+        },
+        "formatType": "prime",
+        "name": "addrTypeMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "AddrTypeMailing"
+      },
+      "cityMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "city",
+        "name": "cityMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "CityMailing"
+      },
+      "countryMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "country",
+        "name": "countryMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "CountryMailing"
+      },
+      "stateMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "state",
+        "name": "stateMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "StateMailing"
+      },
+      "lastName": {
+        "description": "",
+        "format": {},
+        "formatType": "last_name",
+        "name": "lastName",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "LastName"
+      },
+      "firstName": {
+        "description": "",
+        "format": {},
+        "formatType": "first_name",
+        "name": "firstName",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "FirstName"
+      },
+      "customerId": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "customerId",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "CustomerId"
+      }
+    }
+  },
+  {
+    "name": "CustomerId",
+    "description": "",
+    "formatType": "uuid",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "uuid"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Customer"
+      }
+    }
+  },
+  {
+    "name": "FirstName",
+    "description": "",
+    "formatType": "first_name",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "first_name",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "first_name"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Customer"
+      }
+    }
+  },
+  {
+    "name": "LastName",
+    "description": "",
+    "formatType": "last_name",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "last_name",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "last_name"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Customer"
+      }
+    }
+  },
+  {
+    "name": "StateMailing",
+    "description": "",
+    "formatType": "state",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "state",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "state"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "CountryMailing",
+    "description": "",
+    "formatType": "country",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "country",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "country"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "CityMailing",
+    "description": "",
+    "formatType": "city",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "city",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "city"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "AddrTypeMailing",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 3,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "single family",
+            "apartment",
+            "condo"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "single family",
+            "apartment",
+            "condo"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "AgeBracket",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 4,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "20-39",
+            "40-59",
+            "60-79",
+            "80+"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "20-39",
+            "40-59",
+            "60-79",
+            "80+"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "ContactEmail",
+    "description": "",
+    "formatType": "email",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "email",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "email"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Customer"
+      }
+    }
+  },
+  {
+    "name": "Gender",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 3,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Male",
+            "Female",
+            "Other"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "Male",
+            "Female",
+            "Other"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "CreditRating",
+    "description": "",
+    "formatType": "severity_level",
+    "initialQuantity": 3,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Bad",
+            "Medium",
+            "Good"
+          ],
+          "valueLabels": [
+            {
+              "label": "Bad",
+              "value": 1
+            },
+            {
+              "label": "Medium",
+              "value": 2
+            },
+            {
+              "label": "Good",
+              "value": 3
+            }
+          ],
+          "max": 3,
+          "min": 1,
+          "severityBad": 1,
+          "severityGood": 3,
+          "severityLevels": 3
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Medium",
+                "value": 2
+              },
+              {
+                "label": "Good",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "MaritalStatus",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 4,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Single",
+            "Married",
+            "Divorced",
+            "Widdowed"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "Single",
+            "Married",
+            "Divorced",
+            "Widdowed"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [
+          "Customer",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "Sale",
+    "description": "",
+    "formatType": "uuid",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "uuid"
+      },
+      "addrTypeMailing": {
+        "description": "",
+        "format": {
+          "examples": [
+            "single family",
+            "apartment",
+            "condo"
+          ]
+        },
+        "formatType": "prime",
+        "name": "addrTypeMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "AddrTypeMailing"
+      },
+      "cityMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "city",
+        "name": "cityMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "CityMailing"
+      },
+      "stateMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "state",
+        "name": "stateMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "StateMailing"
+      },
+      "countryMailing": {
+        "description": "",
+        "format": {},
+        "formatType": "country",
+        "name": "countryMailing",
+        "params": [],
+        "statisticalType": "Data - Categorical - unordered - geo",
+        "type": "CountryMailing"
+      },
+      "promotion": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "promotion",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Promotion"
+      },
+      "itemClass": {
+        "description": "",
+        "format": {
+          "examples": [
+            "swimware",
+            "dresses",
+            "maternity",
+            "golf",
+            "pools",
+            "athletic shoes",
+            "archery",
+            "fitness",
+            "kids",
+            "mens",
+            "atheletic",
+            "pop"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemClass",
+        "params": [
+          "ItemClass",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      },
+      "itemCategory": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Women",
+            "Men",
+            "Jewelry",
+            "Home",
+            "Electronics",
+            "Children",
+            "Books"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemCategory",
+        "params": [
+          "ItemCategory",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      },
+      "item": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "item",
+        "params": [
+          "Item",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      },
+      "discountGiven": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "discountGiven",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "DiscountGiven"
+      },
+      "netProfit": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "netProfit",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "NetProfit"
+      },
+      "netPaidShipTax": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "netPaidShipTax",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "NetPaidShipTax"
+      },
+      "saleType": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Web",
+            "Store",
+            "Catalogue"
+          ]
+        },
+        "formatType": "prime",
+        "name": "saleType",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "SaleType"
+      },
+      "customer": {
+        "description": "",
+        "format": {},
+        "formatType": "full_name",
+        "name": "customer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Customer"
+      },
+      "timestamp": {
+        "format": {
+          "dateTime": {
+            "day": "2-digit",
+            "hour": "numeric",
+            "minute": "numeric",
+            "month": "2-digit",
+            "second": "numeric",
+            "year": "numeric"
+          }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
+      }
+    }
+  },
+  {
+    "name": "SaleType",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 3,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Web",
+            "Store",
+            "Catalogue"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "Web",
+            "Store",
+            "Catalogue"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "NetPaidShipTax",
+    "description": "",
+    "formatType": "USD",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "displayValue",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Sale"
+      }
+    }
+  },
+  {
+    "name": "NetProfit",
+    "description": "",
+    "formatType": "USD",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "displayValue",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Sale"
+      }
+    }
+  },
+  {
+    "name": "DiscountGiven",
+    "description": "",
+    "formatType": "USD",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "max": 100,
+          "min": 1,
+          "prefix": "$",
+          "suffix": "k"
+        },
+        "formatType": "USD",
+        "name": "displayValue",
+        "params": [
+          1,
+          100
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Sale"
+      }
+    }
+  },
+  {
+    "name": "ItemCategory",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 7,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Women",
+            "Men",
+            "Jewelry",
+            "Home",
+            "Electronics",
+            "Children",
+            "Books"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "Women",
+            "Men",
+            "Jewelry",
+            "Home",
+            "Electronics",
+            "Children",
+            "Books"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "item": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "item",
+        "params": [
+          "Item",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      },
+      "itemClass": {
+        "description": "",
+        "format": {
+          "examples": [
+            "swimware",
+            "dresses",
+            "maternity",
+            "golf",
+            "pools",
+            "athletic shoes",
+            "archery",
+            "fitness",
+            "kids",
+            "mens",
+            "atheletic",
+            "pop"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemClass",
+        "params": [
+          "ItemClass",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "ItemClass",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 12,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {
+          "examples": [
+            "swimware",
+            "dresses",
+            "maternity",
+            "golf",
+            "pools",
+            "athletic shoes",
+            "archery",
+            "fitness",
+            "kids",
+            "mens",
+            "atheletic",
+            "pop"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [
+          [
+            "swimware",
+            "dresses",
+            "maternity",
+            "golf",
+            "pools",
+            "athletic shoes",
+            "archery",
+            "fitness",
+            "kids",
+            "mens",
+            "atheletic",
+            "pop"
+          ]
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "item": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "item",
+        "params": [
+          "Item",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      },
+      "itemCategory": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Women",
+            "Men",
+            "Jewelry",
+            "Home",
+            "Electronics",
+            "Children",
+            "Books"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemCategory",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "ItemCategory"
+      }
+    }
+  },
+  {
+    "name": "Item",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "string"
+      },
+      "quantityOnHand": {
+        "description": "",
+        "format": {},
+        "formatType": "integer",
+        "name": "quantityOnHand",
+        "params": [
+          "QuantityOnHand",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "arrayOf"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      },
+      "manufacturer": {
+        "description": "",
+        "format": {},
+        "formatType": "company_name",
+        "name": "manufacturer",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Manufacturer"
+      },
+      "itemClass": {
+        "description": "",
+        "format": {
+          "examples": [
+            "swimware",
+            "dresses",
+            "maternity",
+            "golf",
+            "pools",
+            "athletic shoes",
+            "archery",
+            "fitness",
+            "kids",
+            "mens",
+            "atheletic",
+            "pop"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemClass",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "ItemClass"
+      },
+      "itemCategory": {
+        "description": "",
+        "format": {
+          "examples": [
+            "Women",
+            "Men",
+            "Jewelry",
+            "Home",
+            "Electronics",
+            "Children",
+            "Books"
+          ]
+        },
+        "formatType": "prime",
+        "name": "itemCategory",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "ItemCategory"
+      }
+    }
+  },
+  {
+    "name": "Manufacturer",
+    "description": "",
+    "formatType": "company_name",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "company_name",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "company_name"
+      },
+      "item": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "item",
+        "params": [
+          "Item",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
+      }
+    }
+  },
+  {
+    "name": "QuantityOnHand",
+    "description": "",
+    "formatType": "integer",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "integer",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
+      },
+      "item": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "item",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Item"
+      },
+      "timestamp": {
+        "format": {
+          "dateTime": {
+            "day": "2-digit",
+            "month": "2-digit",
+            "year": "numeric"
+          }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
+      }
+    }
+  },
+  {
+    "name": "Promotion",
+    "description": "",
+    "formatType": "prime",
+    "initialQuantity": 50,
+    "properties": {
+      "displayValue": {
+        "description": "",
+        "format": {},
+        "formatType": "prime",
+        "name": "displayValue",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "string"
+      },
+      "sale": {
+        "description": "",
+        "format": {},
+        "formatType": "uuid",
+        "name": "sale",
+        "params": [
+          "Sale",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical - free form",
+        "type": "arrayOf"
+      }
+    }
+  }
+]

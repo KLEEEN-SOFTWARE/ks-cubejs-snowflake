@@ -1,0 +1,16 @@
+export const filterSectionFilters = [
+  { name: 'Customer', statisticalType: 'Data - Categorical - free form' },
+  { name: 'Sale', statisticalType: 'Data - Categorical - free form' },
+  { name: 'MaritalStatus', statisticalType: 'Data - Categorical' },
+  { name: 'CreditRating', statisticalType: 'Data - Categorical - ordered - Severity Ranking' },
+  { name: 'Gender', statisticalType: 'Data - Categorical' },
+  { name: 'ContactEmail', statisticalType: 'Data - Categorical - free form' },
+  { name: 'AgeBracket', statisticalType: 'Data - Categorical' },
+  { name: 'AddrTypeMailing', statisticalType: 'Data - Categorical' },
+  { name: 'CityMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'CountryMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'StateMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'LastName', statisticalType: 'Data - Categorical - free form' },
+  { name: 'FirstName', statisticalType: 'Data - Categorical - free form' },
+  { name: 'CustomerId', statisticalType: 'Data - Categorical - free form' },
+];

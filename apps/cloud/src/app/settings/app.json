@@ -1,0 +1,11 @@
+{
+  "companyName": "Kleeen Snowflake Demo",
+  "defaultHomePage": "/overview",
+  "exportConfig": "StandardExport",
+  "layout": {
+    "position": "nav-top"
+  },
+  "productName": "Sales Manager",
+  "crossLinkingInteraction": "On click",
+  "rootVersion": "3.5.1.432.b6413ae0f"
+}

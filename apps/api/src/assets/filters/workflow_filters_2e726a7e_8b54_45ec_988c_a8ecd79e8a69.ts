@@ -1,0 +1,16 @@
+export const filterSectionFilters = [
+  { name: 'Sale', statisticalType: 'Data - Categorical - free form' },
+  { name: 'AddrTypeMailing', statisticalType: 'Data - Categorical' },
+  { name: 'CityMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'StateMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'CountryMailing', statisticalType: 'Data - Categorical - unordered - geo' },
+  { name: 'Promotion', statisticalType: 'Data - Categorical' },
+  { name: 'ItemClass', statisticalType: 'Data - Categorical' },
+  { name: 'ItemCategory', statisticalType: 'Data - Categorical' },
+  { name: 'Item', statisticalType: 'Data - Categorical' },
+  { name: 'DiscountGiven', statisticalType: 'Data - Numeric - NTG - Discrete' },
+  { name: 'NetProfit', statisticalType: 'Data - Numeric - NTG - Discrete' },
+  { name: 'NetPaidShipTax', statisticalType: 'Data - Numeric - NTG - Discrete' },
+  { name: 'SaleType', statisticalType: 'Data - Categorical' },
+  { name: 'Customer', statisticalType: 'Data - Categorical - free form' },
+];
