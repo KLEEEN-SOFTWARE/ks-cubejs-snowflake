@@ -139,15 +139,6 @@ export class Snowflake extends RESTDataSource {
       SS_QUANTITY: [(row) => transformToDisplayValue('item', row.SS_QUANTITY)],
       D_DATE: [(row) => transformToDisplayValue('timestamp', row.D_DATE)],
       SS_NET_PAID_INC_TAX: [(row) => transformToDisplayValue('netPaidShipTax', row.SS_NET_PAID_INC_TAX)],
-
-      // ,
-      // SS_TICKET_NUMBER,
-      // ,
-      // SS_SALES_PRICE,
-      // SS_SOLD_DATE_SK,
-      // ,
-      // C_FIRST_NAME,
-      // C_LAST_NAME
     };
 
     //#endregion helper methods
@@ -158,7 +149,7 @@ export class Snowflake extends RESTDataSource {
     }
     const values = Object.getOwnPropertyNames(rows).map((key) => {
       if (!Object.prototype.hasOwnProperty.call(columnsMap, key)) {
-        // console.warn(`the column name [${key}] did not have a corresponding transformation`);
+        snowflakeLogger(`the column name [${key}] did not have a corresponding transformation`);
         return [];
       }
       return columnsMap[key].map((t: (row: unknown) => unknown) => t(rows));

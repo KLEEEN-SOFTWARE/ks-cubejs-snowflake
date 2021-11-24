@@ -116,7 +116,7 @@ export class Cubejs extends RESTDataSource {
     }
     const values = Object.getOwnPropertyNames(rows).map((key) => {
       if (!Object.prototype.hasOwnProperty.call(columnsMap, key)) {
-        // console.warn(`the column name [${key}] did not have a corresponding transformation`);
+        cubejsLogger(`the column name [${key}] did not have a corresponding transformation`);
         return [];
       }
       return columnsMap[key].map((t: (row: unknown) => unknown) => t(rows));
@@ -133,7 +133,6 @@ export class Cubejs extends RESTDataSource {
       {},
     );
     return {
-      // displayValue: rows['WEBSales.orderNumber'],
       ...newRow,
     };
   }
