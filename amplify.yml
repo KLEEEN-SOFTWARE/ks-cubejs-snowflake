@@ -1,0 +1,54 @@
+version: 0.1
+
+backend:
+  phases:
+    preBuild:
+      commands:
+        - echo "AWS_APP_ID = ${AWS_APP_ID}"
+        - echo "AWS_BRANCH = ${AWS_BRANCH}"
+        - echo "USER_BRANCH = ${USER_BRANCH}"
+
+        - echo "Install Node.js"
+        - nvm install ${VERSION_NODE_12}
+        - nvm use ${VERSION_NODE_12}
+        - chmod -R +x tools/build/backend/*.sh
+
+        - echo "Install global and local dependencies"
+        - >-
+          npm install -g \
+            @aws-amplify/cli@${VERSION_AMPLIFY}
+
+        - npm ci
+
+        - echo "Generate next version"
+        - ./tools/build/backend/generate-next-version.sh
+
+    build:
+      commands:
+        - echo "Execute Amplify CLI with the helper script"
+        - ./tools/build/backend/assume-role.sh
+
+        - echo "Build and push infrastructure using SLS framework"
+
+        - echo "Build middleware and backend API"
+        - ./tools/build/backend/build-middleware.sh
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use $VERSION_NODE_12
+
+    build:
+      commands:
+        - echo "Build Front-end app"
+        - npm run build:prod
+
+  artifacts:
+    baseDirectory: dist/apps/cloud
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - dist/apps/cloud/**/*
