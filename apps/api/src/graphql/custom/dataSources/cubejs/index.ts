@@ -2,10 +2,10 @@ import cubejs, { Query } from '@cubejs-client/core';
 
 import { RESTDataSource } from 'apollo-datasource-rest';
 import debug from 'debug';
+import { environment } from '../../../../environments/environment';
 import { performance } from 'perf_hooks';
 
 const cubejsLogger = debug('cubejs');
-const API_URL = 'http://localhost:4000';
 const CUBEJS_TOKEN = 'YOUR_TOKEN';
 
 export class Cubejs extends RESTDataSource {
@@ -15,7 +15,7 @@ export class Cubejs extends RESTDataSource {
     super();
 
     this.cubejsApi = cubejs(CUBEJS_TOKEN, {
-      apiUrl: `${API_URL}/cubejs-api/v1`,
+      apiUrl: `${environment.cubeEndPoint}/cubejs-api/v1`,
     });
   }
 
