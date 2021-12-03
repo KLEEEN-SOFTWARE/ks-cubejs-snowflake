@@ -7,7 +7,7 @@
   >
 </p>
 <h1 align="center">
-  Kleeen Software / Template
+  Kleeen Software / Snowflake / CubeJS
 </h1>
 
 <p align="center">
@@ -26,6 +26,30 @@
   <img alt="Git" width="35" height="25" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original-wordmark.svg" />
   <img alt="GitHub" width="35" height="25" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
 </p>
+
+<details>
+  <summary><b>:scientist: 1. About the Prototype</b></summary>
+
+The data in this prototype come from three different sources, Kleeen Synthetic data, [Snowflake](https://www.snowflake.com/), and Snowflake through [Cube.JS](https://cube.dev/).
+
+Following is the list of widgets connected to CubeJS and Snowflake data sources.
+
+**Snowflake**
+  - Widget: Most Recent In-Store Sales | 
+  [Source Code](apps/api/src/graphql/custom/widgetResolvers/object_listing_c29df561_a8a4_45b3_9eac_f879dbaff776.ts)
+  
+  - Widget: Most Sold Items This Week | [Source Code](apps/api/src/graphql/custom/widgetResolvers/widget_44ef1d94_b75e_4f2f_bde6_3101d0e7be7d.ts)
+
+  - Widget: Items with Lowest Inventory | [Source Code](apps/api/src/graphql/custom/widgetResolvers/widget_83f1fd76_e0a4_4f55_b694_27aadf9b0012.ts)
+  
+  - Widget: Popular Deals This Month | [Source Code](apps/api/src/graphql/custom/widgetResolvers/widget_b6f762fb_5f03_4e86_8430_99ca4c1b4c1c.ts)
+  
+  - Widget: Purchase Locations | [Source Code](apps/api/src/graphql/custom/widgetResolvers/widget_c9d539e7_a88c_4d3f_a237_6ae4f8de0327.ts)
+  
+  **CubeJS**
+  - Widget: Most Recent Web Sales | [Source Code](apps/api/src/graphql/custom/widgetResolvers/object_listing_b2a1508d_a714_4988_b75a_bc44495a3060.ts)
+
+</details>
 
 <details>
   <summary><b>🧰  1. Prerequisites</b></summary>
