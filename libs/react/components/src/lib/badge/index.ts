@@ -1,10 +1,9 @@
-import { styled, withStyles } from '@material-ui/core';
-
 import MuiBadge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core';
 
 export const KsBadge = withStyles({
-  // Default badge uses main clickable color
   root: {
+    textTransform: 'none',
     '& .iconFilter': {
       position: 'relative',
     },
@@ -17,8 +16,8 @@ export const KsBadge = withStyles({
       color: 'var(--on-secondary-color)',
     },
     '&:hover': {
-      color: 'var(--secondary-color-variant)',
       background: 'var(--transparent)',
+      color: 'var(--secondary-color-variant)',
     },
   },
 })(MuiBadge);

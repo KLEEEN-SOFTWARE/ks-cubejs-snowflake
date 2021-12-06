@@ -1,3 +1,4 @@
+import { GroupByProps, ValuesProps, WidgetContextParams } from '@kleeen/types';
 /* eslint-disable max-lines */
 import {
   httpStatusCode as HTTP_STATUS_CODE,
@@ -7,7 +8,6 @@ import {
   removeTrailingSlash,
   upperCamelCase,
 } from '@kleeen/common/utils';
-import { ValuesProps, WidgetContextParams } from '@kleeen/types';
 import {
   autoCompleteQuery,
   createEntityQuery,
@@ -247,6 +247,10 @@ export class BaseApiService {
 
   static genericDispatchCustomAction(params: WidgetContextParams) {
     const { baseModel, displayName, operationName } = params;
+    if (!baseModel) {
+      console.warn('The base model for the custom action is empty', baseModel);
+      return;
+    }
     const filters = getFiltersInput(params?.filters);
     const parsedOperationName = operationName ? operationName : `${displayName}${entityMap[baseModel]}`;
     const variables = {
@@ -308,14 +312,20 @@ export class BaseApiService {
       query = getWorkflowFiltersQuery(operationName);
     } else {
       const { groupBy, value } = params;
-      const groupByWithoutFormatType = dissoc('formatType', groupBy);
+      const groupByWithoutFormatType = dissoc<GroupByProps, 'formatType'>(
+        'formatType',
+        groupBy as GroupByProps,
+      );
       const groupByToUse = isNilOrEmpty(groupByWithoutFormatType) ? null : groupByWithoutFormatType;
       variables = {
         input: {
           cardinality: params.cardinality,
           filters,
           groupBy: groupByToUse,
-          value: dissoc('formatType', value),
+          value: dissoc<NonNullable<typeof value>, 'formatType'>(
+            'formatType',
+            value as NonNullable<typeof value>,
+          ),
         },
       };
       query = getChartDataQuery(operationName);

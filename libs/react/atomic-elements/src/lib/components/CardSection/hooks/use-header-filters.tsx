@@ -7,8 +7,7 @@ import {
 } from '@kleeen/react/hooks';
 import { useEffect, useState } from 'react';
 
-import { FilterQueryBuilderSection } from '@kleeen/react/atomic-elements';
-import { LibraryWidget } from '@kleeen/widgets';
+import { NewFilterSection } from '@kleeen/react/atomic-elements';
 import { getFiltersInput } from '@kleeen/frontend/utils';
 import { getThingByName } from '@kleeen/things';
 import { getWidgetWithFilters } from '@kleeen/investigations';
@@ -24,9 +23,8 @@ export function useHeaderFilters({ widget }: UseHeaderFiltersProps) {
   const addInvestigationWidgetProperties = useAddInvestigateWidgetProperties();
 
   useEffect(() => {
-    // TODO: We should a new method that separates filter query rule values that are arrays
-    //       into multiple independent rules
     const filtersAsFilterQuery = getFiltersInput(widget.params?.filters);
+
     setFilterQuery(filtersAsFilterQuery);
   }, []);
 
@@ -46,7 +44,8 @@ export function useHeaderFilters({ widget }: UseHeaderFiltersProps) {
     });
     const resolvedWidgetWithFilters = getWidgetWithFilters({
       filters,
-      widget: widget as LibraryWidget,
+      overridePreviousFilters: true,
+      widget,
     });
 
     // FIXME: @marimba this should be removed once the KSE3-4630 is solved
@@ -61,10 +60,6 @@ export function useHeaderFilters({ widget }: UseHeaderFiltersProps) {
   }
 
   return (
-    <FilterQueryBuilderSection
-      attributes={filterableAttributes}
-      filterQuery={filterQuery}
-      onFilter={handleFilter}
-    />
+    <NewFilterSection attributes={filterableAttributes} filterQuery={filterQuery} onFilter={handleFilter} />
   );
 }

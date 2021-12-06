@@ -32,3 +32,11 @@ export const KsMenu = styled(MuiMenu)({
     color: 'var(--on-surface-color)',
   },
 });
+
+export const KsMenuItemHeader = styled(MuiMenuItem)({
+  backgroundColor: 'hsla(var(--on-surface-color-hsl), 0.7)',
+  color: 'var(--on-secondary-color-variant)',
+  fontSize: 'var(--tx-M)',
+  height: 'var(--wh-2XS)',
+  pointerEvents: 'none',
+});

@@ -1,6 +1,5 @@
-import { ActionType, ThingAction, WidgetScope, WidgetTypes } from '@kleeen/types';
+import { ActionType, ThingAction, Widget, WidgetScope } from '@kleeen/types';
 
-import { LibraryWidget } from '@kleeen/widgets';
 import { State } from '@kleeen/react/state-management';
 import { getThingById } from '@kleeen/things';
 import { isNilOrEmpty } from '@kleeen/common/utils';
@@ -8,15 +7,15 @@ import { useKleeenContext } from './useKleeenContext';
 
 const INVESTIGATE_SUFFIX = '-investigation-';
 
-export type AddInvestigationWidgetProperties = (widget: LibraryWidget) => LibraryWidget;
+export type AddInvestigationWidgetProperties = (widget: Widget) => Widget;
 
 export function addInvestigationWidgetProperties({
   index,
   widget,
 }: {
   index: number;
-  widget: LibraryWidget;
-}): LibraryWidget {
+  widget: Widget;
+}): Widget {
   return {
     ...widget,
     actions: getInvestigationSimpleActions(widget.entityId, widget.scope),
@@ -33,7 +32,7 @@ export function removeInvestigateSuffix(widgetId: string) {
 export function useAddInvestigateWidgetProperties(): AddInvestigationWidgetProperties {
   const { investigationWidgets } = useKleeenContext<State.InvestigationState>('ksInvestigation');
 
-  return (widget: LibraryWidget) =>
+  return (widget: Widget) =>
     isNilOrEmpty(investigationWidgets)
       ? widget
       : addInvestigationWidgetProperties({ widget, index: investigationWidgets?.length });
@@ -43,12 +42,11 @@ export function getInvestigationSimpleActions(entityId: number, scope: WidgetSco
   if (scope !== WidgetScope.Single) return [];
 
   const isNotDeleteAdd = (e: ThingAction) => ![ActionType.Add, ActionType.Delete].includes(e.type);
-  const isCustomModal = (e: ThingAction) => !e.isCustomModal;
 
   const thing = getThingById(entityId);
   if (isNilOrEmpty(thing)) return [];
 
-  const actions = thing.actions.filter(isNotDeleteAdd).filter(isCustomModal);
+  const actions = thing.actions.filter(isNotDeleteAdd);
 
   return actions;
 }

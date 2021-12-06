@@ -4,6 +4,7 @@ import { ActionDialogsProps } from './ActionDialogs.model';
 import { ActionType } from '@kleeen/types';
 import { AddDialogPayload } from '../dialog/components/add-dialog/add-dialog.model';
 import { ConfirmationActionDialog } from './components/ConfirmationDialog/ConfirmationDialog';
+import CustomDialogComponent from './custom-action-dialog';
 import { KUIConnect } from '@kleeen/core-react';
 
 function ActionDialogsComponent({
@@ -21,9 +22,12 @@ function ActionDialogsComponent({
   translate,
 }: ActionDialogsProps): ReactElement {
   const { areYouSure, component: CustomDialog, type } = action;
+
   const isCustomAction = CustomDialog && type === ActionType.Custom;
   const isCustomAddAction = CustomDialog && type === ActionType.Add;
   const isCustomDeleteAction = CustomDialog && type === ActionType.Delete;
+  const isAddActionWithCustomModal = isCustomAddAction && typeof CustomDialog === 'string';
+  const AddDialogComponent = isAddActionWithCustomModal ? CustomDialogComponent : CustomDialog;
 
   function handleConfirmationClose(): void {
     onIsConfirmationOpenChange(action);
@@ -54,8 +58,9 @@ function ActionDialogsComponent({
         />
       )}
       {isCustomAddAction && CustomDialog && (
-        <CustomDialog
+        <AddDialogComponent
           attributes={attributes}
+          component={CustomDialog}
           action={action}
           context={context}
           description={`${translate && translate('app.dialog.confirmation')} ${action.displayName}?`}
@@ -79,13 +84,14 @@ function ActionDialogsComponent({
         isCustomDeleteAction && <></>
       }
       {isCustomAction && CustomDialog && (
-        <CustomDialog
+        <CustomDialogComponent
           context={context}
           description={action.description}
           key={`${action.name}-custom`}
           open={isCustomOpen || false}
           onAction={(e: MouseEvent) => dispatchAction(action, e)}
           onClose={handleCustomClose}
+          component={CustomDialog as string}
           title={action.displayName}
         />
       )}

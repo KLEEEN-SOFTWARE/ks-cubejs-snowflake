@@ -1,5 +1,5 @@
 import { CardSectionLayout, Widget, WidgetCategory } from '@kleeen/types';
-import { isSummaryWidget, isTableWidget, isVisualizationWidget } from '@kleeen/frontend/utils';
+import { isSummaryWidget, isTableWidget, isVisualizationWidget } from '@kleeen/widgets';
 import { useEffect, useState } from 'react';
 
 import { CardSection } from '@kleeen/react/atomic-elements';
@@ -21,20 +21,18 @@ export function PreviewPanelContent() {
   useEffect(() => {
     if (isNilOrEmpty(previewWidgetCategory)) return;
 
-    const newWidgetsFilteredByCategory = previewWidgets
-      .filter((previewWidget) => {
-        const widgetCategoryFilter = widgetCategoryFilters[previewWidgetCategory];
+    const newWidgetsFilteredByCategory = previewWidgets.filter((previewWidget) => {
+      const widgetCategoryFilter = widgetCategoryFilters[previewWidgetCategory];
 
-        if (typeof widgetCategoryFilter != 'function') {
-          console.error(`There is no widgetCategoryFilter for "${previewWidgetCategory}"`);
-          return false;
-        }
+      if (typeof widgetCategoryFilter != 'function') {
+        console.error(`There is no widgetCategoryFilter for "${previewWidgetCategory}"`);
+        return false;
+      }
 
-        const shouldFilterInWidget = widgetCategoryFilter(previewWidget.chartType);
+      const shouldFilterInWidget = widgetCategoryFilter(previewWidget.chartType);
 
-        return shouldFilterInWidget;
-      })
-      .map((previewWidget) => ({ ...previewWidget, actions: [] })); // *Removing actions for Summary and Table widgets on preview
+      return shouldFilterInWidget;
+    });
 
     setWidgetsFilteredByCategory(newWidgetsFilteredByCategory);
   }, [previewWidgets, previewWidgetCategory]);

@@ -33,6 +33,7 @@ export interface MuiVirtualizedTableProps extends WithStyles<typeof styles> {
   hasActions: boolean;
   headerHeight?: number;
   isDeletable: boolean;
+  isLoading?: boolean;
   localization: { [key: string]: string };
   onAutocompleteRequest: (attribute: string) => void;
   onCellClickFunction?: (dataPoints: ContextMenuDataPoint[], hasCrossLinking: boolean) => void;

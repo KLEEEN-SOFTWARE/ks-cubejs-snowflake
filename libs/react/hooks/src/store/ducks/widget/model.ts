@@ -13,6 +13,7 @@ export const initialState: WidgetState = {
   error: null,
   params: {},
   isLoading: false,
+  isLoadingAdditionalRows: false, //TODO: @marimba change this state for enums instead of separate booleans
 };
 
 export const model: WidgetModel = {
@@ -39,7 +40,7 @@ export const model: WidgetModel = {
     },
 
     getMoreData(state: WidgetState): void {
-      state.isLoading = false;
+      state.isLoadingAdditionalRows = true;
       state.error = null;
     },
     getMoreDataSuccess(state: WidgetState, { payload }: WidgetActions.GetDataSuccess): void {
@@ -49,7 +50,7 @@ export const model: WidgetModel = {
         data: [...state.data.data, ...response.data],
       };
       state.data = newData;
-      state.isLoading = false;
+      state.isLoadingAdditionalRows = false;
       state.error = null;
     },
     getMoreDataFailure(state: WidgetState, { payload }: WidgetActions.GetDataFailure): void {

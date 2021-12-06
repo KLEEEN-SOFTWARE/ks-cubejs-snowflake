@@ -5,6 +5,7 @@ import { DataAggregationArgs, DataAggregationArgsDataPoint, GetWidgetDataResult 
 import { FakeDataDataPoint, GetWidgetData, PrimitiveTypes } from './types';
 import {
   buildArrayOfNumbers,
+  getCrossLinking,
   getDataList,
   getEntityFormat,
   getRandomNumber,
@@ -154,13 +155,10 @@ const getWidgetDataNoGroupBy = (value: FakeDataDataPoint): GetWidgetDataResult |
     key: value.name,
     ...valueFormat,
   };
-  const hasCrosslinking =
-    value.transformation && transformationsWithCrossLinking.includes(value.transformation);
-  const crossLinking = hasCrosslinking
-    ? value.transformation === Transformation.SelfMulti
-      ? value.idList
-      : value.idList?.[0]
-    : [];
+  const hasCrosslinking = Boolean(
+    value.transformation && transformationsWithCrossLinking.includes(value.transformation),
+  );
+  const crossLinking = getCrossLinking(hasCrosslinking, value);
   const transformedValue = calculateTransformation(value.list || [], value.transformation);
   return {
     format,
@@ -229,9 +227,13 @@ const getWidgetDataOneGroupBy = (
         };
       }
     }
-    // cardinality: multi & value/groupBy
-    // results: [[0, 54], [0, 58], [1, 28]]
-    // categories: [100, 200, 300]
+
+    /**
+     * cardinality: multi & value/groupBy
+     * results: [[0, 54], [0, 58], [1, 28]]
+     * categories: [100, 200, 300]
+     *
+     */
     if (Cardinality.Multi === cardinality) {
       const results = toMultipleResults(groupBy.list, value.list);
 

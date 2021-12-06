@@ -1,7 +1,6 @@
 import { Attribute, ColumnDataExtended } from '@kleeen/types';
 
 import { IndexRange } from 'react-virtualized';
-import { MuiVirtualizedTableProps } from '../VirtualScroll.model';
 
 export interface ColumnsMapFunctionArgs {
   columnsForCell: ColumnDataExtended[];
@@ -21,6 +20,7 @@ export const configContainer = {
 };
 export interface GetHeaderRenderArgs {
   index: number;
+  isLoading?: boolean;
   newAttributes: Attribute[];
   withInputValues: boolean;
 }

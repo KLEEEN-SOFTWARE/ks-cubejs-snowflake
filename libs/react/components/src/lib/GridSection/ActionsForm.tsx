@@ -1,9 +1,9 @@
 import './ActionsForm.scss';
 
-import { Action, ActionType } from '@kleeen/types';
+import { Action, ActionType, DisplayValue } from '@kleeen/types';
 import { FC, MouseEvent, ReactElement, useState } from 'react';
 
-import ActionsMenu from '../ActionsMenu/ActionsMenu';
+import ActionsMenu from '../actions-menu/actions-menu';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,6 +24,7 @@ export interface ActionsFormProps {
   isEditable?: boolean;
   localization: Localization;
   row: RowData;
+  rowDisplayValue: DisplayValue;
 }
 
 const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElement => {
@@ -35,6 +36,7 @@ const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElemen
     isEditable,
     localization: { editButtonAriaLabel, deleteButtonAriaLabel },
     row,
+    rowDisplayValue,
   } = props;
 
   const numberOfActionsEnabled = [isDeletable, isEditable, !isNilOrEmpty(actions)].filter(Boolean).length;
@@ -81,6 +83,7 @@ const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElemen
               anchorEl={anchorEl}
               handleClose={handleClose}
               row={row}
+              rowDisplayValue={rowDisplayValue}
               triggerAction={handleCustomAction}
             />
           )}

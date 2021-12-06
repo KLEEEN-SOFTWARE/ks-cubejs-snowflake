@@ -64,8 +64,6 @@ export class ApiQuantityOnHand extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('quantityOnHand');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { quantityOnHand: { displayValue: string; value?: any } }) => ({
-      ...obj.quantityOnHand,
-    }));
+    return results.map((obj) => ({ ...obj.quantityOnHand }));
   }
 }

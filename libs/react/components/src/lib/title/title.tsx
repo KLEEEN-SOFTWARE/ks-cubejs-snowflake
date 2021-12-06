@@ -2,6 +2,7 @@ import { KsSvgIcon, KsSvgIconSize } from '../svg-icon';
 import { KsTitleMaxWidthEnum, KsTitleProps } from './title.model';
 
 import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
+import { ReactElement } from '@kleeen/types';
 import { Tooltip } from '@material-ui/core';
 import classnames from 'classnames';
 import { isNotNilOrEmpty } from '@kleeen/common/utils';
@@ -12,6 +13,7 @@ const bem = 'ks-title';
 export function KsTitle({
   className,
   displayMedia,
+  hasTooltip,
   icon,
   isMainTitle,
   subTitle,
@@ -57,9 +59,7 @@ export function KsTitle({
             [classes.commonTitle]: !isMainTitle,
           })}
         >
-          <Tooltip title={title} placement="top">
-            <span>{title}</span>
-          </Tooltip>
+          <Title hasTooltip={hasTooltip} title={title} />
         </h3>
         {subTitle && (
           <span className={classnames(`${bem}__title--sub`, classes.withoutMargin)}>{subTitle}</span>
@@ -67,4 +67,16 @@ export function KsTitle({
       </div>
     </div>
   );
+}
+
+function Title({ title, hasTooltip }: { title: ReactElement | string; hasTooltip?: boolean }) {
+  if (hasTooltip && title) {
+    return (
+      <Tooltip title={title} placement="top">
+        <span>{title}</span>
+      </Tooltip>
+    );
+  }
+
+  return <span>{title}</span>;
 }

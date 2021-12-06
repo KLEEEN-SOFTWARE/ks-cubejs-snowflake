@@ -64,6 +64,6 @@ export class ApiTimestamp extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('timestamp');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { timestamp: { displayValue: string; value?: any } }) => ({ ...obj.timestamp }));
+    return results.map((obj) => ({ ...obj.timestamp }));
   }
 }

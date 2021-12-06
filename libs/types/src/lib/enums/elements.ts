@@ -18,6 +18,7 @@ export enum ElementInputType {
   DateTimeField = 'DateTimeField',
   FieldTextAutoComplete = 'FieldTextAutoComplete',
   RadioGroup = 'RadioGroup',
+  RelativeDateDropdown = 'RelativeDateDropdown',
   SelectTextAutocomplete = 'SelectTextAutocomplete',
   Switch = 'Switch',
   TokenFieldText = 'TokenFieldText',

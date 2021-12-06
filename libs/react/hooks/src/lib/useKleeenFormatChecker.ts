@@ -2,6 +2,7 @@ import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from '
 import { useEffect, useState } from 'react';
 
 import { BaseApiService } from '@kleeen/frontend/utils';
+import { DEBOUNCE_WAIT } from '@kleeen/types';
 import { Subject } from 'rxjs';
 import { pathOr } from 'ramda';
 
@@ -38,7 +39,7 @@ export const useKleeenFormatChecker = ({
           map((formValue: string | number) => formValue.toString()),
           map((formValue: string) => formValue.trim()),
           distinctUntilChanged(),
-          debounceTime(200),
+          debounceTime(DEBOUNCE_WAIT),
           switchMap((formValue: string) =>
             BaseApiService.graphqlFormatCheck({ taskName, widgetId, formField, formValue }).pipe(
               map((request) => request.response),

@@ -27,7 +27,8 @@ export interface KsDropDownProps {
   accessKey?: string;
   dataTestId?: string;
   handleOnClick?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, item: ItemType) => void;
-  headerSection?: string;
+  headerSectionLabel?: string;
+  headerTranslationId?: string;
   hideIcon?: boolean;
   options: ItemType[];
   placement?: PopperPlacementType;
@@ -47,7 +48,8 @@ export interface KsMenuProps
     KsDropDownProps,
     | 'accessKey'
     | 'handleOnClick'
-    | 'headerSection'
+    | 'headerSectionLabel'
+    | 'headerTranslationId'
     | 'options'
     | 'placement'
     | 'selectedItem'

@@ -1,1 +1,1 @@
-export * from './use-query-filter';
+export * from './use-is-filter-disabled';

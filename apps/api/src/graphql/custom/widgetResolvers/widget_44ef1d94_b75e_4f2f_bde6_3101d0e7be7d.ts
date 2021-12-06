@@ -1,5 +1,4 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
-import { Snowflake } from '../dataSources/snowflake';
 
 // Widget Summary
 // Widget: Most Sold Items This Week
@@ -9,63 +8,36 @@ export const widget_44ef1d94_b75e_4f2f_bde6_3101d0e7be7d = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {
-  const dataSource = new Snowflake();
-  try {
-    await dataSource.connect();
+  // KAPI - Integration
 
-    const rows = (await dataSource.execute({
-      sqlText: `
-    select
-        I_ITEM_SK,
-        I_PRODUCT_NAME,
-        COUNT(STORE_SALES.*) AS SALES
-    from
-        STORE_SALES
-        JOIN DATE_DIM ON
-            STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-            AND DATE_DIM.D_DATE BETWEEN '2002-11-07' AND '2002-11-15'
-        JOIN ITEM ON
-            ITEM.I_ITEM_SK = STORE_SALES.SS_ITEM_SK
-    GROUP BY
-        I_ITEM_SK,
-        I_PRODUCT_NAME
-    UNION ALL
-    select
-        I_ITEM_SK,
-        I_PRODUCT_NAME,
-        COUNT(WEB_SALES.*) AS SALES
-    from
-        WEB_SALES
-        JOIN DATE_DIM ON
-            WEB_SALES.WS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-            AND DATE_DIM.D_DATE BETWEEN '2002-11-07' AND '2002-11-15'
-        JOIN ITEM ON
-            ITEM.I_ITEM_SK = WEB_SALES.WS_ITEM_SK
-    GROUP BY
-        I_ITEM_SK,
-        I_PRODUCT_NAME
-    ORDER BY SALES DESC
-    LIMIT 20;
-`,
-    })) as unknown[];
+  // In order for you to connect your backend, you can add in here your code
+  // that fetch the corresponding API data.
 
-    const data = dataSource.transformToViz(rows, {
-      crossLinking: 'I_ITEM_SK',
-      category: 'I_PRODUCT_NAME',
-      value: 'SALES',
-      xAxis: { key: 'item', type: 'string' },
-      yAxis: { key: 'sale', type: 'string' },
-    });
+  // You can access the token, data sources, and the current user through the 'context' param.
 
-    return data;
-  } catch (error) {
-    console.error(error);
-    return error;
-  } finally {
-    try {
-      await dataSource.disconnect();
-    } catch (error) {
-      console.log(`An error occurred trying to disconnect.`, error);
-    }
-  }
+  // Please replace the default return statement ('not implemented') with the
+  // required widget response, e.g.
+  // const format = {
+  //   xAxis: {
+  //     type: 'datetime', // The type of the attribute, usually datetime for x axis.
+  //     key: 'yourAttribute',
+  //     isNumericType: true, // True or false depending on the type
+  //   },
+  //   yAxis: {
+  //     type: 'string', // String or any other KAPI type, depending on your attribute
+  //     key: 'yourAttribute',
+  //     isNumericType: false, // True or false depending on the type
+  //   },
+  // };
+  // return fetch('http://put.your.api.here/your-resource') // Fetch is available through npm package node-fetch
+  //   .then((http_response) => http_response.json()) // Extracts the JSON body content from the http response.
+  //   .then((res) => {
+  //     return { format, res };
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     return 'not implemented';
+  //   });
+
+  return 'not implemented';
 };

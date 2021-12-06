@@ -8,5 +8,3 @@ export const ContextMenuDefaultSectionOrder = [
 ];
 
 export const ContextMenuInvestigationSectionOrder = [ContextMenuSection.AddInvestigationCard];
-
-export const ContextMenuPreviewSectionOrder = [ContextMenuSection.StartInvestigation];

@@ -64,8 +64,6 @@ export class ApiMaritalStatus extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('maritalStatus');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { maritalStatus: { displayValue: string; value?: any } }) => ({
-      ...obj.maritalStatus,
-    }));
+    return results.map((obj) => ({ ...obj.maritalStatus }));
   }
 }

@@ -64,6 +64,6 @@ export class ApiLastName extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('lastName');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { lastName: { displayValue: string; value?: any } }) => ({ ...obj.lastName }));
+    return results.map((obj) => ({ ...obj.lastName }));
   }
 }

@@ -9,4 +9,3 @@ export * from './sdt';
 export * from './things';
 export * from './transformations';
 export * from './visualization';
-export * from './widgets';

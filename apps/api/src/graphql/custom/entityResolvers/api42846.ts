@@ -64,8 +64,6 @@ export class ApiCountryMailing extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('countryMailing');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { countryMailing: { displayValue: string; value?: any } }) => ({
-      ...obj.countryMailing,
-    }));
+    return results.map((obj) => ({ ...obj.countryMailing }));
   }
 }

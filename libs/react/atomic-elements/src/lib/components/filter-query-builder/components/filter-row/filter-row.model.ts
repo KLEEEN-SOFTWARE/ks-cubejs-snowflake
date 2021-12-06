@@ -1,15 +1,16 @@
-import { FilterQueryBuilderProps } from '../../filter-query-builder.model';
-import { FilterRule } from '@kleeen/types';
+import { FilterRule, PrimitiveType } from '@kleeen/types';
 
-export interface FilterRowProps extends Pick<FilterQueryBuilderProps, 'translate'> {
+import { ClassNameMap } from '@material-ui/styles';
+
+export interface DisplayIdFilterProps {
+  value: PrimitiveType;
+}
+
+export interface FilterRowProps {
   filterRule: FilterRule;
   index: number;
 }
 
-export type FilterRowAttributesProps = FilterRowProps;
-
-export type FilterRowInputProps = Pick<FilterRowProps, 'filterRule' | 'index'>;
-
-export type FilterRowOperationsProps = FilterRowProps;
-
-export type FilterRowWhereProps = Pick<FilterRowProps, 'index' | 'translate'>;
+export interface FilterRowPartialProps extends FilterRowProps {
+  classes: ClassNameMap;
+}

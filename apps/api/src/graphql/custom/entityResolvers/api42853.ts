@@ -64,8 +64,6 @@ export class ApiCreditRating extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('creditRating');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { creditRating: { displayValue: string; value?: any } }) => ({
-      ...obj.creditRating,
-    }));
+    return results.map((obj) => ({ ...obj.creditRating }));
   }
 }

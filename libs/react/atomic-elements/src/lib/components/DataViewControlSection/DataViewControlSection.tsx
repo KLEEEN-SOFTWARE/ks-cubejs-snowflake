@@ -1,5 +1,6 @@
 import './DataViewControlSection.scss';
 
+import { Action, WidgetTypes } from '@kleeen/types';
 import {
   ActionDialogs,
   ActionsSection,
@@ -11,15 +12,20 @@ import { Container, Title, Typography } from './DataViewControlSection.styles';
 import { DataViewControlSectionProps, UseActionsProps } from './DataViewControlSection.model';
 import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
 import { ReactElement, useState } from 'react';
-import { useGetDisplayValue, useKleeenActions } from '@kleeen/react/hooks';
+import {
+  getWidgetContextName,
+  useGetDisplayValue,
+  useKleeenActions,
+  useKleeenContext,
+} from '@kleeen/react/hooks';
 
-import { Action } from '@kleeen/types';
 import Grid from '@material-ui/core/Grid';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { ViewSwitcher } from './view-switcher';
 import classnames from 'classnames';
 import { isAddAction } from '@kleeen/render-utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+import { pathOr } from 'ramda';
 
 const bem = 'ks-data-view-control-section';
 
@@ -54,6 +60,15 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
   const { displayValue, format } = useGetDisplayValue({ objectValue, taskName });
   const addActions = getAddActions();
   const entityName = isNilOrEmpty(currentView?.entityName) ? props.entity : currentView.entityName;
+
+  const contextName = getWidgetContextName({ taskName, widgetId: currentView?.id as string });
+  const fullTableData = useKleeenContext(contextName);
+
+  const currentViewIsFullTable = currentView?.chartType === WidgetTypes.FULL_TABLE;
+  const fullTableIsLoading = pathOr(false, ['isLoading'], fullTableData);
+  const fullTableIsLoadingAdditionalRows = pathOr(false, ['isLoadingAdditionalRows'], fullTableData);
+  const isFullViewAndLoading =
+    currentViewIsFullTable && (fullTableIsLoading || fullTableIsLoadingAdditionalRows);
 
   function handleClick(action: Action): void {
     if (action?.component) {
@@ -116,7 +131,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
         <Grid alignItems="center" className="actions" container data-testid="page-actions">
           {!props.hideRefreshControl && (
             <>
-              <RefreshControl onRefresh={refreshPage} taskName={taskName} />
+              <RefreshControl onRefresh={refreshPage} taskName={taskName} pause={isFullViewAndLoading} />
               <KsAutoRefreshControl taskName={taskName} onRefresh={refreshPage} />
             </>
           )}

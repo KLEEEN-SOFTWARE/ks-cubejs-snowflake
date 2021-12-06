@@ -8,6 +8,7 @@ interface CardWidgetProps {
   children: ReactNode;
   disabled?: boolean;
   disableHeightCalculation?: boolean;
+  hasTooltip?: boolean;
   Header?: JSX.Element;
   hideTitle?: boolean;
   icon: boolean;

@@ -1,19 +1,10 @@
-import {
-  ColumnData,
-  FormatProps,
-  Row,
-  ViewOptionFormattedType,
-  ViewShapeType,
-  WidgetIcons,
-  WidgetTypes,
-} from '@kleeen/types';
+import { ColumnData, FormatProps, Row, ViewOptionFormattedType, ViewShapeType } from '@kleeen/types';
+import { camelCase, upperFirst, words } from 'lodash';
 import { isNil, pipe } from 'ramda';
 
-import camelCase from 'lodash.camelcase';
 import { isNilOrEmpty } from '../validators';
 import mergeWith from 'lodash.mergewith';
 import uniqueId from 'lodash.uniqueid';
-import upperFirst from 'lodash.upperfirst';
 import { v4 as uuid } from 'uuid';
 
 export const generateId = (id?: string): string => id || uuid();
@@ -101,6 +92,43 @@ export function formatViewOptions(viewOptions: ViewShapeType[]): ViewOptionForma
     };
   });
 }
+
+/**
+ * upperFirst each word of a string.
+ *
+ * @param value The string to upperFirst
+ * @example
+ *
+ * upperFirstWords(); //=> ''
+ * upperFirstWords(''); //=> ''
+ *
+ * upperFirstWords('hello Kleeen'); //=> 'HelloKleeen'
+ * upperFirstWords('hello + Kleeen'); //=> 'Hello+Kleeen'
+ * upperFirstWords('hello - Kleeen'); //=> 'Hello-Kleeen'
+ * upperFirstWords('HELLO Kleeen'); //=> 'HELLOKleeen'
+ */
+export const upperFirstWords = (value = ''): string => words(value, /[^ ]+/g).map(upperFirst).join('');
+
+export const sortByViewOrder = ({ viewOrder: firstOrder = 0 }, { viewOrder: secondOrder = 0 }) =>
+  Number(firstOrder) - Number(secondOrder);
+
+export function sortByKeys<T>(
+  viewOptions: T[],
+  [firstKey, secondKey]: [fistKey: string, secondKey: string],
+): T[] {
+  const sortedViewsByOrder = viewOptions
+    .filter((view) => !isNilOrEmpty(view[firstKey]))
+    .sort((first, second) => {
+      return first[firstKey] > second[firstKey] ? 1 : -1;
+    });
+
+  const sortedViewsById = viewOptions
+    .filter((view) => isNilOrEmpty(view[firstKey]))
+    .sort((first, second) => (first[secondKey] > second[secondKey] ? 1 : -1));
+
+  return [...sortedViewsByOrder, ...sortedViewsById];
+}
+
 //#region Private Members
 
 /** Lodash mergeByCustomizer, returns undefined to use the regular mergeBy function
@@ -127,25 +155,5 @@ function mergeBy<T>(source: T[], override: T[], predicate: string): T[] {
     );
     return overrideObj ? mergeWith({}, sourceObj, overrideObj, mergeByCustomizer) : sourceObj;
   });
-}
-
-export const sortByViewOrder = ({ viewOrder: firstOrder = 0 }, { viewOrder: secondOrder = 0 }) =>
-  Number(firstOrder) - Number(secondOrder);
-
-export function sortByKeys<T>(
-  viewOptions: T[],
-  [firstKey, secondKey]: [fistKey: string, secondKey: string],
-): T[] {
-  const sortedViewsByOrder = viewOptions
-    .filter((view) => !isNilOrEmpty(view[firstKey]))
-    .sort((first, second) => {
-      return first[firstKey] > second[firstKey] ? 1 : -1;
-    });
-
-  const sortedViewsById = viewOptions
-    .filter((view) => isNilOrEmpty(view[firstKey]))
-    .sort((first, second) => (first[secondKey] > second[secondKey] ? 1 : -1));
-
-  return [...sortedViewsByOrder, ...sortedViewsById];
 }
 //#endregion

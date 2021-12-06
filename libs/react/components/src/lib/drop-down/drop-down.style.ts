@@ -1,6 +1,4 @@
-import { makeStyles, styled } from '@material-ui/core/styles';
-
-import MuiMenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles({
   dropDownSize: {
@@ -25,12 +23,4 @@ export const useStyles = makeStyles({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },
-});
-
-export const MenuItemHeader = styled(MuiMenuItem)({
-  backgroundColor: 'hsla(var(--on-surface-color-hsl), 0.7)',
-  color: 'var(--on-secondary-color-variant)',
-  height: 'var(--wh-2XS)',
-  fontSize: 'var(--tx-M)',
-  pointerEvents: 'none',
 });

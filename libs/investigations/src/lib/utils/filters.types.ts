@@ -1,6 +1,4 @@
-import { DataPoint, FilterQuery, Filters, Maybe, VizParams, WidgetScope } from '@kleeen/types';
-
-import { LibraryWidget } from '@kleeen/widgets';
+import { DataPoint, FilterQuery, Filters, Maybe, VizParams, Widget, WidgetScope } from '@kleeen/types';
 
 export interface GetFiltersForDataPointsArgs {
   contextDataPoints: DataPoint[];
@@ -21,19 +19,19 @@ export interface GetContextDataPointFiltersArgs {
 }
 
 export interface GetWidgetsWithFiltersProps extends GetFiltersForDataPointsArgs {
-  widgets: LibraryWidget[];
+  widgets: Widget[];
 }
 
 export interface WidgetsWithFilters {
-  widgetsWithDefaultFilters: LibraryWidget[];
-  widgetsWithContextDataPointFilters: LibraryWidget[];
+  widgetsWithDefaultFilters: Widget[];
+  widgetsWithContextDataPointFilters: Widget[];
 }
 
 export interface GetWidgetWithFilters {
   filterQuery?: FilterQuery;
   filters: Maybe<Filters>;
   overridePreviousFilters?: boolean;
-  widget: LibraryWidget;
+  widget: Widget;
 }
 
 export interface GetContextFilters {

@@ -4,8 +4,8 @@ import {
   ContextMenuSectionProps,
 } from '../../context-menu.model';
 import { DataPointWithFormattedValue, ReactElement, VizParams, Widget, WidgetScope } from '@kleeen/types';
-import { LibraryWidget, entityHasWidgets, getWidgetsByEntity } from '@kleeen/widgets';
 import { PreviewPanel, usePreviewPanel } from '@kleeen/react/hooks';
+import { entityHasWidgets, getWidgetsByEntity } from '@kleeen/widgets';
 import { getContextDataPoints, getWidgetsDecoratedWithFilters } from '@kleeen/investigations';
 import { useEffect, useState } from 'react';
 
@@ -97,7 +97,7 @@ function getClickHandler({ handleClose, item, previewPanel }: PreviewItemClickHa
 
   return () => () => {
     handleClose();
-    previewPanel.setPreviewWidgets(widgets as Widget[]);
+    previewPanel.setPreviewWidgets(widgets);
     previewPanel.openPreviewPanel(previewTitle);
   };
 }
@@ -112,7 +112,7 @@ interface PreviewItem {
   label: ReactElement;
   previewTitle: ReactElement;
   scope: WidgetScope;
-  widgets: LibraryWidget[];
+  widgets: Widget[];
 }
 
 function getPreviewItems({

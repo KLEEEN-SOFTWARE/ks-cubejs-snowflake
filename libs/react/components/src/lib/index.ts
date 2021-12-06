@@ -9,7 +9,7 @@ export { default as RefreshControl } from './refreshControl';
 export { default as useKsActionsManager } from './ActionDialogs/ActionManager';
 
 export * from './ActionDialogs';
-export * from './ActionsMenu/ActionsMenu';
+export * from './actions-menu/actions-menu';
 export * from './arrowPoint';
 export * from './auto-refresh-control';
 export * from './autocomplete';
@@ -30,6 +30,7 @@ export * from './context-cell';
 export * from './context-menu';
 export * from './crosslink';
 export * from './date-interval';
+export * from './date-picker';
 export * from './date-time';
 export * from './dialog';
 export * from './dialog/dialog.styles';

@@ -1,3 +1,3 @@
-import { FilterQueryBuilderProps } from '../filter-query-builder/filter-query-builder.model';
+import { FilterSectionProps } from '../filter-section/filter-section.model';
 
-export type FilterQueryBuilderSectionProps = FilterQueryBuilderProps;
+export type FilterQueryBuilderSectionProps = Pick<FilterSectionProps, 'onFilter'>;

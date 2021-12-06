@@ -1,7 +1,7 @@
 import { Attribute, ChangeDirectionsProps } from './attributes';
 import { Maybe, OnInputChangeEvent, RegisterEvents } from './base';
 import { StatisticalDataType, TemporalInterval, Transformation, ViewType } from '../enums';
-import { WidgetScope, WidgetTypes } from '../enums/widgets';
+import { WidgetCategory, WidgetScope, WidgetTypes } from '../enums/widgets';
 
 import { Action } from './actions';
 import { Filters } from './filters';
@@ -148,16 +148,34 @@ export interface WidgetState {
   data: any;
   error: any;
   isLoading: boolean;
+  isLoadingAdditionalRows: boolean;
   params: VizParams;
 }
 
-export type WidgetsByEntityByType<T> = {
-  [key in WidgetScope]?: T[];
+export type WidgetsByCategory = {
+  [key in WidgetCategory]?: Widget[];
 };
 
-export interface WidgetsByEntityMap<T> {
-  [key: string]: WidgetsByEntityByType<T>;
+export type WidgetsByScopeByCategory = {
+  [key in WidgetScope]?: WidgetsByCategory;
+};
+
+export type WidgetIdsByScope = {
+  [key in WidgetScope]?: string[];
+};
+
+export type WidgetsByScope = {
+  [key in WidgetScope]?: Widget[];
+};
+
+export interface WidgetsByEntityByScopeByCategory {
+  [thingId: string]: WidgetsByScopeByCategory;
 }
 
-export type WidgetDefinition = string;
-export type WidgetIdsByEntity = WidgetsByEntityMap<WidgetDefinition>;
+export interface WidgetIdsByEntityByScope {
+  [thingId: string]: WidgetIdsByScope;
+}
+
+export interface WidgetsByEntityByScope {
+  [thingId: string]: WidgetsByScope;
+}

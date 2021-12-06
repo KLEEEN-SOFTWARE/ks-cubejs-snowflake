@@ -1,10 +1,9 @@
-import { Action, InvestigationCustomAction, Translate, Widget } from '@kleeen/types';
+import { Action, InvestigationCustomAction, InvestigationWidget, TranslateProps } from '@kleeen/types';
 
-export interface ActionsDropdownProps {
+export interface ActionsDropdownProps extends TranslateProps {
   actionsName: string;
   taskName: string;
-  translate: Translate;
-  widget: Widget;
+  widget: InvestigationWidget;
 }
 
 export interface ActionDialogProps {

@@ -46,9 +46,12 @@ export const useStyles = makeStyles({
     overflow: 'hidden',
   },
   commonTitle: {
+    alignItems: 'center',
     color: 'var(--h3-title-color)',
+    display: 'flex',
     fontSize: 'var(--tx-1XL)',
     fontWeight: 400,
+    height: 'var(--wh-2XS)',
     letterSpacing: 'var(--pm-0)',
     lineHeight: 'var(--tx-1XL)',
     margin: 'var(--pm-0)',

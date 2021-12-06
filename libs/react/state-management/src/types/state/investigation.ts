@@ -1,5 +1,5 @@
-import { LibraryWidget } from '@kleeen/widgets';
+import { Widget } from '@kleeen/types';
 
 export interface InvestigationState {
-  investigationWidgets: LibraryWidget[];
+  investigationWidgets: Widget[];
 }

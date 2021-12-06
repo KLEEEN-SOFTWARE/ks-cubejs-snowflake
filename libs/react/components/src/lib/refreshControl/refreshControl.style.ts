@@ -1,6 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles({
+  disabledRefreshControl: {
+    cursor: 'not-allowed',
+    '& > *': {
+      opacity: '0.4',
+      pointerEvents: 'none',
+    },
+  },
   refreshControl: {
     display: 'flex',
     flexDirection: 'column',

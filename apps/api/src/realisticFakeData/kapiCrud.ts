@@ -15,19 +15,25 @@ interface ListItem {
   };
 }
 
+interface ListItemObject {
+  [entityName: string]: ListItem;
+}
+
 type Metadata = { entityType: string };
 
 const DISPLAY_VALUE = 'displayValue';
 const METADATA = '$metadata';
 const SELF_TRANSFORMATION = [Transformation.SelfSingle, Transformation.SelfMulti];
 
-function getDisplayValueId(id: string, entity: Attribute, metadata: Metadata): Maybe<string> {
+function getDisplayValueId(id: string, entity: Attribute, metadata: Metadata): string {
   if (!metadata) return id;
 
   if (entity?.isXor) {
     const xor = KapiDb.findRandomOne(toEntityName(metadata?.entityType));
 
-    return xor?.id;
+    if (!xor?.id) throw new Error('The entity does not have id.');
+
+    return xor.id;
   }
 
   return id;
@@ -121,8 +127,8 @@ const toDisplayValue = (
   entityName: string,
   item: ListItem | any,
   attributes?: Attribute[],
-): ListItem | unknown => {
-  const formattedDisplayValue = formatToDisplayValue(entityName, item, attributes);
+): ListItemObject => {
+  const formattedDisplayValue = formatToDisplayValue(entityName, item, attributes) as ListItemObject;
   const formattedAttributes = formatAttributesToDisplayValue(item, attributes);
 
   return { ...formattedDisplayValue, ...formattedAttributes };
@@ -156,7 +162,7 @@ export class KapiCrud {
   static list(entityName: string, params?: { attributes: Attribute[] }) {
     const list = KapiDb.listByName<ListItem>(toEntityName(entityName));
 
-    if (!list) throw `The ${entityName} does not exists`;
+    if (!list) throw Error(`The ${entityName} does not exists`);
 
     const withDisplayValue = list.map((item) => toDisplayValue(entityName, item, params?.attributes));
 

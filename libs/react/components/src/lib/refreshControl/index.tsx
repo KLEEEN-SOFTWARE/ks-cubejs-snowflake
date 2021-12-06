@@ -15,12 +15,18 @@ import { RefreshControlProps } from './refreshControl.model';
 import { StorageHelper } from '@aws-amplify/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { TimeIntervals } from '@kleeen/types';
+import classnames from 'classnames';
 
 const REFRESH = 0;
 const MIN_INTERVAL = 0.25;
 const DEFAULT_INTERVAL = 5;
 
-const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps): ReactElement => {
+const RefreshControl = ({
+  onRefresh,
+  pause = false,
+  taskName,
+  translate,
+}: RefreshControlProps): ReactElement => {
   const _storage = new StorageHelper().getStorage();
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;
@@ -32,6 +38,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const [percent, setPercent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const isTimerPaused = useRef(false);
+  const isPreviewTimerPaused = useRef(false);
   const currentInterval = useRef(MIN_INTERVAL);
   const updateAt = useRef(Date.now() + currentInterval.current * 60 * 1000);
   const currentTime = useRef(Date.now() + 5 * 60 * 1000);
@@ -40,6 +47,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   currentInterval.current = Number(localStorageValue);
 
   const togglePause = (): void => {
+    isPreviewTimerPaused.current = !isTimerPaused.current;
     isTimerPaused.current = !isTimerPaused.current;
     setIsPaused(!isPaused);
   };
@@ -53,13 +61,20 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
     updateAtCurrent();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     autoRefreshSubscription = autoRefresh$.subscribe((workflows: string | string[]) => {
       if (workflows.includes(taskName)) ResetControl();
     });
 
     return () => autoRefreshSubscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!isPreviewTimerPaused.current) {
+      isTimerPaused.current = pause;
+      setIsPaused(pause);
+    }
+  }, [pause]);
 
   useEffect(() => {
     // FIXME: JSON.parse throws when fail, add a validation.
@@ -105,7 +120,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   }, []);
 
   return (
-    <div className={classes.refreshControl}>
+    <div className={classnames(classes.refreshControl, { [classes.disabledRefreshControl]: pause })}>
       <CircularProgress radius={20} stroke={3} progress={percent}>
         <RefreshControlFab
           onClick={() => {

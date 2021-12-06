@@ -8,6 +8,7 @@ export default {
   'ks-close': { path: './assets/icons/close.svg', alt: 'Close' },
   'ks-config': { path: './assets/icons/icon-config.svg', alt: 'Config' },
   'ks-custom': { path: './assets/icons/icon-custom.svg', alt: 'Custom' },
+  'ks-date-picker': { path: './assets/icons/calendar-3.svg', alt: 'Date Picker' },
   'ks-delete': { path: './assets/icons/bin-1.svg', alt: 'Delete' },
   'ks-edit': { path: './assets/icons/pencil.svg', alt: 'Edit' },
   'ks-end-user': { path: './assets/icons/single-neutral-circle.svg', alt: 'End User' },

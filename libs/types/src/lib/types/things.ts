@@ -17,6 +17,7 @@ export interface ThingAttribute {
 
 export interface ThingAction {
   areYouSure: boolean;
+  component?: string;
   description?: string;
   displayName: string;
   id: string;

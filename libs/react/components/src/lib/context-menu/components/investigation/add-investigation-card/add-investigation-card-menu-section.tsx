@@ -20,8 +20,8 @@ import { useEffect, useState } from 'react';
 import { ContextMenuItemView } from '../../context-menu-item';
 import { ContextMenuSection } from './../../context-menu-section';
 import { InvestigationItem } from '../investigation-item.model';
-import { LibraryWidget } from '@kleeen/widgets';
 import { Translate } from '@kleeen/core-react';
+import { Widget } from '@kleeen/types';
 import { getAddInvestigationCardItems } from './add-investigation-card-items';
 import { getInvestigationSectionLabel } from '../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
@@ -109,7 +109,7 @@ export function KsContextMenuAddInvestigationCardSection({
 
 //#region Private Members
 interface AddInvestigationCardItemClickHandler extends ContextMenuClickHandler<InvestigationItem> {
-  addWidget: (widget: LibraryWidget) => void;
+  addWidget: (widget: Widget) => void;
   addInvestigationWidgetProperties: AddInvestigationWidgetProperties;
 }
 

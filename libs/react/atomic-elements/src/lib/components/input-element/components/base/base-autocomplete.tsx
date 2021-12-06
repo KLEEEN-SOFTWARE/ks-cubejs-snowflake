@@ -1,8 +1,10 @@
-import { BaseInputComponentProps, ListItem } from '@kleeen/types';
+import { BaseInputComponentProps, DEBOUNCE_WAIT, ListItem } from '@kleeen/types';
 import { KsAutocomplete, KsTextField, TextFormatter } from '@kleeen/react/components';
+import { useRef, useState } from 'react';
 
 import { AutocompleteInputChangeReason } from '@material-ui/lab/useAutocomplete';
 import { INITIAL_ATTRIBUTE_VALUE_SINGLE } from '../../../widgets/config-input-widget';
+import debounce from 'lodash.debounce';
 import { getOptionLabel } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
@@ -16,7 +18,15 @@ interface BaseAutocompleteProps extends BaseInputComponentProps {
 }
 
 export function BaseAutocomplete(props: BaseAutocompleteProps) {
-  const inputValue = isNilOrEmpty(props.value) ? INITIAL_ATTRIBUTE_VALUE_SINGLE : String(props.value);
+  const [inputValue, setInputValue] = useState(() => {
+    return isNilOrEmpty(props.value) ? INITIAL_ATTRIBUTE_VALUE_SINGLE : String(props.value);
+  });
+  const debouncedSetValue = useRef(debounce((newValue) => props.setValue(newValue), DEBOUNCE_WAIT)).current;
+
+  function handleInputChange(value: string) {
+    setInputValue(value);
+    debouncedSetValue(value);
+  }
 
   return (
     <KsAutocomplete
@@ -28,14 +38,14 @@ export function BaseAutocomplete(props: BaseAutocompleteProps) {
       inputValue={inputValue}
       onInputChange={(_, value: string, signal: AutocompleteInputChangeReason) => {
         if (signal === 'clear' || (signal === 'input' && isNilOrEmpty(value))) {
-          props.setValue(INITIAL_ATTRIBUTE_VALUE_SINGLE);
+          handleInputChange(INITIAL_ATTRIBUTE_VALUE_SINGLE);
         } else if (value) {
-          props.setValue(value);
+          handleInputChange(value);
         }
       }}
       onChange={(_, option?: ListItem) => {
         props.setSelectedOption(option);
-        props.setValue(option?.displayValue || INITIAL_ATTRIBUTE_VALUE_SINGLE);
+        handleInputChange(option?.displayValue || INITIAL_ATTRIBUTE_VALUE_SINGLE);
       }}
       options={props.options}
       renderInput={(params) => (

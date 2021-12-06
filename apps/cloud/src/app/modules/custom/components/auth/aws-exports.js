@@ -8,13 +8,14 @@ const awsmobile = {
   aws_user_pools_id: 'us-east-1_QrqIRi0IC',
   aws_user_pools_web_client_id: '28170cvv6ous1ttpig6b0f7csn',
   oauth: {
-    domain: 'kleeen652ba0c8-652ba0c8-develop.auth.us-east-1.amazoncognito.com',
+    domain: 'kleeencloud-develop.auth.us-east-1.amazoncognito.com',
     scope: ['phone', 'email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
-    redirectSignIn: 'http://localhost:4200/,https://cubejs-dev.app.kleeen.cloud/',
-    redirectSignOut: 'http://localhost:4200/,https://cubejs-dev.app.kleeen.cloud/',
+    redirectSignIn: 'http://localhost:4200/,https://develop.kleeen.cloud/',
+    redirectSignOut: 'http://localhost:4200/,https://develop.kleeen.cloud/',
     responseType: 'code',
   },
   federationTarget: 'COGNITO_USER_POOLS',
 };
+
 
 export default awsmobile;
