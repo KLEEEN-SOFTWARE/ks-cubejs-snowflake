@@ -1,5 +1,6 @@
 import { TemporalBucket } from '../types';
 import { TemporalInterval } from '../enums';
+
 export const granularityOptions: TemporalBucket[] = [
   {
     interval: TemporalInterval.Day,

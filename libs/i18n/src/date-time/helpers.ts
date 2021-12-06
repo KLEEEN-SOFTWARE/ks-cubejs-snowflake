@@ -6,7 +6,7 @@ import { DEFAULT_TIME_ZONE } from './constants';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import moment from 'moment';
 
-type PossibleDate = string | Date | moment.Moment;
+type PossibleDate = string | number | Date | moment.Moment;
 
 interface ConvertToMomentResult {
   success: boolean;
@@ -94,8 +94,9 @@ export function getTimezone(timezone: Timezone): string {
   return getClientTimezone();
 }
 
-export function toDateTimeFormat(value: moment.Moment, format = DateTimeFormat.DEFAULT_DATE_TIME): string {
-  return isNilOrEmpty(value) ? '' : value.format(format);
+export function toDateTimeFormat(value: PossibleDate, format = DateTimeFormat.DEFAULT_DATE_TIME): string {
+  const valueAsMoment = moment(value);
+  return isNilOrEmpty(value) ? '' : valueAsMoment.format(format);
 }
 
 export function getCurrentDateTime(): moment.Moment {

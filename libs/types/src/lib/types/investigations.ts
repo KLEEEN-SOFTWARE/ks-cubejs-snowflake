@@ -19,6 +19,7 @@ export interface InvestigationCard {
   filters?: Filters;
   followUpCards?: InvestigationCard[];
   metadata: InvestigationMetadata;
+  mainContextDataPoint?: InvestigationDataPoint;
   widgetChartType?: WidgetTypes;
   widgetId?: string;
 }

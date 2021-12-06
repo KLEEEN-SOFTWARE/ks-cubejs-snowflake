@@ -6,60 +6,53 @@ import {
   ListItem,
   SingleFilterRuleValue,
 } from '@kleeen/types';
-import {
-  FilterRowAttributesProps,
-  FilterRowInputProps,
-  FilterRowOperationsProps,
-  FilterRowProps,
-  FilterRowWhereProps,
-} from './filter-row.model';
+import { DisplayIdFilterProps, FilterRowPartialProps, FilterRowProps } from './filter-row.model';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { KsAutocomplete, KsTextField } from '@kleeen/react/components';
 import { getFilterElement, getFilterOperators } from '@kleeen/elements';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { Clear } from '@material-ui/icons';
 import classnames from 'classnames';
 import { getInputElement } from '../../../input-element/input-element-catalog';
+import { isFilterIdOnly } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { useQueryFilters } from '../../hooks';
+import { useFilterQueryActions } from '../../../filter-section/hooks';
+import { useIsFilterDisabled } from '../../hooks';
 import { useStyles } from '../../filter-query-builder.styles';
 
 const bem = ClassNameBem.FilterRow;
 
-export function FilterRow({ filterRule, index, translate }: FilterRowProps) {
-  const { removeRule } = useQueryFilters();
+export const FilterRow = memo(({ filterRule, index }: FilterRowProps) => {
   const classes = useStyles();
+
+  const partialProps = {
+    classes,
+    filterRule,
+    index,
+  };
 
   return (
     <div className={classnames(bem, classes.row)}>
-      <FilterRowWhere index={index} translate={translate} />
-      <FilterRowAttributes filterRule={filterRule} index={index} translate={translate} />
-      <FilterRowOperations filterRule={filterRule} index={index} translate={translate} />
-      <FilterRowInput filterRule={filterRule} index={index} />
-      <Tooltip title={translate('app.filterSelection.filter.remove')} placement="left">
-        <IconButton
-          onClick={() => removeRule(index)}
-          className={classnames(`${bem}__removeButton`, classes.removeButton)}
-        >
-          <Clear style={{ fontSize: 17 }} />
-        </IconButton>
-      </Tooltip>
+      <FilterRowWhere {...partialProps} />
+      <FilterRowAttributes {...partialProps} />
+      <FilterRowOperations {...partialProps} />
+      <FilterRowInput {...partialProps} />
+      <FilterRowRemove {...partialProps} />
     </div>
   );
-}
+});
 
 //#region Private members
-function FilterRowAttributes({ filterRule, index, translate }: FilterRowAttributesProps) {
-  const { filterState, setField } = useQueryFilters();
-  const classes = useStyles();
-
-  const { attributes } = filterState;
+function FilterRowAttributes({ classes, filterRule, index }: FilterRowPartialProps) {
+  const { attributes, setField, translate } = useFilterQueryActions();
+  const isDisabled = useIsFilterDisabled(filterRule);
 
   return (
     <KsAutocomplete
       className={classnames(`${bem}__attributes-section`, classes.option)}
       disableClearable
+      disabled={isDisabled}
       getOptionLabel={(value) => translate(`entities.${value}.${value}`)}
       onChange={(_, value) => setField(index, value)}
       options={attributes.map((attribute) => attribute.name)}
@@ -76,14 +69,13 @@ function FilterRowAttributes({ filterRule, index, translate }: FilterRowAttribut
     />
   );
 }
-
-function FilterRowInput({ filterRule, index }: FilterRowInputProps) {
-  const { setValue } = useQueryFilters();
+function FilterRowInput({ filterRule, index }: FilterRowPartialProps) {
+  const { setValue } = useFilterQueryActions();
   const [elementInputType, setElementInputType] = useState<ElementInputType | null>(null);
   const [, setSelectedOption] = useState<ListItem | null>(null);
 
   useEffect(() => {
-    if (isNilOrEmpty(filterRule.field) || isNilOrEmpty(filterRule.operation)) return;
+    if (isNilOrEmpty(filterRule.field)) return;
 
     const filterElementInputType = getFilterElement({
       filterOperator: filterRule.operation,
@@ -91,7 +83,11 @@ function FilterRowInput({ filterRule, index }: FilterRowInputProps) {
     });
 
     setElementInputType(filterElementInputType);
-  }, [filterRule.field, filterRule.operation]);
+  }, [filterRule.field]);
+
+  if (isFilterIdOnly(filterRule)) {
+    return <DisplayIdFilter value={(filterRule.value as SingleFilterRuleValue).id} />;
+  }
 
   const InputComponent = getInputElement(elementInputType);
 
@@ -112,10 +108,10 @@ function FilterRowInput({ filterRule, index }: FilterRowInputProps) {
   );
 }
 
-function FilterRowOperations({ filterRule, index, translate }: FilterRowOperationsProps) {
-  const { setOperation } = useQueryFilters();
+function FilterRowOperations({ classes, filterRule, index }: FilterRowPartialProps) {
+  const { setOperation, translate } = useFilterQueryActions();
+  const isDisabled = useIsFilterDisabled(filterRule);
   const [operationsOptions, setOperationsOptions] = useState<FilterOperation[]>([]);
-  const classes = useStyles();
 
   useEffect(() => {
     if (isNilOrEmpty(filterRule.field)) return;
@@ -129,6 +125,7 @@ function FilterRowOperations({ filterRule, index, translate }: FilterRowOperatio
     <KsAutocomplete
       className={classnames(`${bem}__operations-section`, classes.option)}
       disableClearable
+      disabled={isDisabled}
       getOptionLabel={(value) => translate(`app.filter.operator.${value}`)}
       onChange={(_, value) => setOperation(index, value)}
       options={operationsOptions}
@@ -146,11 +143,23 @@ function FilterRowOperations({ filterRule, index, translate }: FilterRowOperatio
   );
 }
 
-function FilterRowWhere({ index, translate }: FilterRowWhereProps) {
-  const { filterState, setCombinator } = useQueryFilters();
-  const classes = useStyles();
+function FilterRowRemove({ classes, index }: FilterRowPartialProps) {
+  const { removeRule, translate } = useFilterQueryActions();
 
-  const { filterQuery } = filterState;
+  return (
+    <Tooltip title={translate('app.filterSelection.filter.remove')} placement="left">
+      <IconButton
+        className={classnames(`${bem}__remove-section`, classes.removeButton)}
+        onClick={() => removeRule(index)}
+      >
+        <Clear style={{ fontSize: 17 }} />
+      </IconButton>
+    </Tooltip>
+  );
+}
+
+function FilterRowWhere({ classes, index }: FilterRowPartialProps) {
+  const { setCombinator, translate } = useFilterQueryActions();
 
   const shouldRenderWhereText = index === 0;
 
@@ -166,7 +175,8 @@ function FilterRowWhere({ index, translate }: FilterRowWhereProps) {
     <KsAutocomplete
       className={classnames(`${bem}__where-section`, classes.where)}
       disableClearable
-      disabled={false}
+      // TODO: @cafe enable this once filters support the OR operator, update this component value as well
+      disabled
       getOptionLabel={(value) => translate(`app.filter.combinator.${value}`)}
       onChange={(_, value) => setCombinator(value)}
       options={[FilterCombinator.AND, FilterCombinator.OR]}
@@ -179,8 +189,18 @@ function FilterRowWhere({ index, translate }: FilterRowWhereProps) {
           InputProps={{ ...params.InputProps }}
         />
       )}
-      value={filterQuery.combinator}
+      value={FilterCombinator.AND}
     />
+  );
+}
+
+// Temporary component for id only filters, to be removed when we handle
+// filters with both displayValue and id
+function DisplayIdFilter({ value }: DisplayIdFilterProps) {
+  return (
+    <Tooltip title={value}>
+      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value}</span>
+    </Tooltip>
   );
 }
 //#endregion

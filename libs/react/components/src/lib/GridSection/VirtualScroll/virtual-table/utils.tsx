@@ -1,11 +1,14 @@
-import { bem } from './VirtualizedTable';
-import { CellFormatResultsType } from '../CellRenderer/CellRenderer.model';
 import { ColumnData, ColumnDataExtended } from '@kleeen/types';
-import { getFormatText } from '@kleeen/react/components';
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import classnames from 'classnames';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import React, { ReactNode, useEffect, useState } from 'react';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
+
+import { CellFormatResultsType } from '../CellRenderer/CellRenderer.model';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import { Loader } from '../../../Loader/Loader';
+import { bem } from './VirtualizedTable';
+import classnames from 'classnames';
+import { getFormatText } from '@kleeen/react/components';
+import { styles } from '../VirtualScroll.style';
 
 export const compareStateColumns = (columnA: ColumnData, columnB: ColumnData) =>
   columnA.attr?.id === columnB.attr?.id;
@@ -52,30 +55,46 @@ const SortableHeaderRowRenderer = SortableContainer(
 
 export const getHeaderRowRenderer =
   ({
-    helperClass,
     handleOnColumnSort,
+    helperClass,
+    isLoading,
+    loaderRefreshClass,
   }: {
     helperClass: string;
     handleOnColumnSort: (oldIndex: number, newIndex: number) => void;
+    isLoading: boolean;
+    loaderRefreshClass: string;
   }) =>
   (props: { className: string; columns: ColumnShapeForSortTable[]; style: React.CSSProperties }) =>
     (
-      <SortableHeaderRowRenderer
-        {...props}
-        axis="x"
-        helperClass={helperClass}
-        lockAxis="x"
-        distance={20}
-        onSortEnd={({ oldIndex, newIndex }) => {
-          handleOnColumnSort(oldIndex, newIndex);
-        }}
-      />
+      <div style={{ width: 'fit-content' }}>
+        <SortableHeaderRowRenderer
+          {...props}
+          axis="x"
+          distance={20}
+          helperClass={helperClass}
+          lockAxis="x"
+          onSortEnd={({ oldIndex, newIndex }) => {
+            handleOnColumnSort(oldIndex, newIndex);
+          }}
+        />
+        {isLoading && (
+          <div className={loaderRefreshClass}>
+            <Loader />
+          </div>
+        )}
+      </div>
     );
 
-export const useInfiniteScrollFunctions = (
-  columns: ColumnData[],
-  getMoreRows: ({ startIndex, stopIndex }: { startIndex: number; stopIndex: number }) => void,
-): {
+export const useInfiniteScrollFunctions = ({
+  columns,
+  getMoreRows,
+  pause = false,
+}: {
+  columns: ColumnData[];
+  getMoreRows: ({ startIndex, stopIndex }: { startIndex: number; stopIndex: number }) => void;
+  pause?: boolean;
+}): {
   infiniteLoaderProps: {
     isRowLoaded: ({ index }: { index: number }) => boolean;
     loadMoreRows: ({ startIndex, stopIndex }: { startIndex: number; stopIndex: number }) => any;
@@ -96,7 +115,9 @@ export const useInfiniteScrollFunctions = (
 
   // TODO: @marimba return a Promise here since ReactVirtualized library expects it
   function loadMoreRows({ startIndex, stopIndex }: { startIndex: number; stopIndex: number }): any {
-    if (!isLoadingMoreRows && getMoreRows) {
+    const shouldGetMoreRows = !pause && !isLoadingMoreRows && typeof getMoreRows == 'function';
+
+    if (shouldGetMoreRows) {
       getMoreRows({ startIndex, stopIndex });
       setIsLoadingMoreRows(true);
     }

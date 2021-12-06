@@ -1,5 +1,5 @@
 {
-  "companyName": "Kleeen Snowflake Demo",
+  "companyName": "Kleeen Snowflake-CubeJS  Demo",
   "defaultHomePage": "/overview",
   "exportConfig": "StandardExport",
   "layout": {
@@ -7,5 +7,5 @@
   },
   "productName": "Sales Manager",
   "crossLinkingInteraction": "On click",
-  "rootVersion": "3.5.1.432.b6413ae0f"
+  "rootVersion": "4.0.0.435.9e5e9f538"
 }

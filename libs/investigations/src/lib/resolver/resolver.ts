@@ -1,11 +1,13 @@
-import { InvestigationCard, Maybe } from '@kleeen/types';
-import { LibraryWidget, getWidget, getWidgetsByEntity } from '@kleeen/widgets';
+import { InvestigationCard, InvestigationWidget, Maybe } from '@kleeen/types';
+import { getWidget, getWidgetsByEntity } from '@kleeen/widgets';
 
 import { WidgetWithMetadata } from '../types';
 import { getWidgetWithFilters } from '../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
-export function resolveInvestigationCardWidget(investigationCard: InvestigationCard): Maybe<LibraryWidget> {
+export function resolveInvestigationCardWidget(
+  investigationCard: InvestigationCard,
+): Maybe<InvestigationWidget> {
   // *Compute the best widget
   if (investigationCard.dataPoint) {
     const { entityId, scope, value } = investigationCard.dataPoint;
@@ -42,7 +44,14 @@ export function resolveInvestigationCardWidget(investigationCard: InvestigationC
 
   // *There's no data point to evaluate, just try to find by widgetId
   if (!isNilOrEmpty(investigationCard.widgetId)) {
-    return getWidget(investigationCard.widgetId);
+    const widget = getWidget(investigationCard.widgetId);
+    if (widget) {
+      return {
+        focusDataPointValue: investigationCard?.mainContextDataPoint?.value,
+        ...widget,
+      };
+    }
+    return;
   }
 
   return;

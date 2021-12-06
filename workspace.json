@@ -8,11 +8,16 @@
     "cloud-e2e": "apps/cloud-e2e",
     "common-utils": "libs/common/utils",
     "elements": "libs/elements",
+    "end-product-backend-ks-models": "libs/end-product/backend/ks-models",
+    "end-product-backend-ks-resolvers": "libs/end-product/backend/ks-resolvers",
+    "end-product-backend-resolvers": "libs/end-product/backend/resolvers",
+    "end-product-frontend-things": "libs/end-product/frontend/things",
     "environment": "libs/environment",
     "frontend-utils": "libs/frontend/utils",
     "i18n": "libs/i18n",
     "infusion": "libs/infusion",
     "investigations": "libs/investigations",
+    "middleware": "apps/middleware",
     "react-atomic-elements": "libs/react/atomic-elements",
     "react-components": "libs/react/components",
     "react-hooks": "libs/react/hooks",
@@ -27,6 +32,7 @@
   "cli": {
     "defaultCollection": "@nrwl/react"
   },
+  "defaultProject": "cloud",
   "generators": {
     "@nrwl/workspace": {
       "library": {
@@ -77,6 +83,5 @@
         "linter": "eslint"
       }
     }
-  },
-  "defaultProject": "cloud"
+  }
 }

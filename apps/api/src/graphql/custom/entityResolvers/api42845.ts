@@ -64,8 +64,6 @@ export class ApiStateMailing extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('stateMailing');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { stateMailing: { displayValue: string; value?: any } }) => ({
-      ...obj.stateMailing,
-    }));
+    return results.map((obj) => ({ ...obj.stateMailing }));
   }
 }

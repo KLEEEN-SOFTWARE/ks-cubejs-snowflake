@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": true,
     "noImplicitAny": true,
     "strict": true,
     "types": ["cypress"]

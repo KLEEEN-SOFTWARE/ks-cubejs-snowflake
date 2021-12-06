@@ -1,15 +1,6 @@
-import { DateTime } from '@kleeen/react/components';
 import { InputComponentProps } from '@kleeen/types';
-import { Moment } from 'moment';
+import { KsDatePickerInput } from '@kleeen/react/components';
 
 export function DateTimePicker({ setValue, value }: InputComponentProps) {
-  return (
-    <DateTime
-      defaultValue={value}
-      handleOnChange={(newValue: Moment) => {
-        setValue(newValue);
-      }}
-      label={''} // TODO: @cafe set this as optional
-    />
-  );
+  return <KsDatePickerInput initialTimestamp={value} onChange={setValue} />;
 }

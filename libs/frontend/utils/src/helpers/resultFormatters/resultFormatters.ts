@@ -6,22 +6,20 @@ import {
   DataListResult,
   FormatProps,
   FormatValueLabel,
+  Maybe,
   SameSDTAggregations,
   Transformation,
   TrendFormat,
 } from '@kleeen/types';
 import { GetSeveritiesResultProps, TrendFormatterProps, ValueResultProps } from './ResultFormatters.model';
+import { camelCase, memoize, omit } from 'lodash';
 
-import _ from 'lodash';
-import camelCase from 'lodash.camelcase';
 import { getContextInfo } from './context-info';
-import { isNil } from 'ramda';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import memoize from 'lodash.memoize';
 import { parsedHSL } from '../color';
 
 export function formatAxis(axis) {
-  return axis.categories ? { ..._.omit(axis, ['min', 'max']) } : { ...axis };
+  return axis.categories ? { ...omit(axis, ['min', 'max']) } : { ...axis };
 }
 
 export function getColor(
@@ -78,8 +76,11 @@ function categoryColorsParsed(colorsLevels, severityLevels): [string] {
   return colorsLevels(bottomColor, topColor, severityLevels);
 }
 
-export function getSeveritiesFn(yAxis: FormatProps, colorsLevels?: any): GetSeveritiesResultProps[] {
-  if (isNil(yAxis)) return [];
+export function getSeveritiesFn(
+  yAxis: Maybe<FormatProps> = {},
+  colorsLevels?: any,
+): GetSeveritiesResultProps[] {
+  if (isNilOrEmpty(yAxis)) return [];
 
   const { severityLevels, severityGood, severityBad } = yAxis;
 
@@ -132,7 +133,7 @@ export function getSeveritiesFn(yAxis: FormatProps, colorsLevels?: any): GetSeve
 
 export const getSeverities = memoize(
   getSeveritiesFn,
-  ({ severityLevels, severityGood, severityBad }) => `${severityLevels}_${severityGood}_${severityBad}`,
+  ({ severityLevels, severityGood, severityBad } = {}) => `${severityLevels}_${severityGood}_${severityBad}`,
 );
 
 export function getColorForSeverityValues(
@@ -167,11 +168,11 @@ export function formatRadialResults(
     const contextInfo = getContextInfo({
       axes: [
         {
-          key: xAxis.key,
+          key: xAxis?.key as string,
           value: displayValue,
         },
         {
-          key: yAxis.key,
+          key: yAxis.key as string,
           value,
         },
       ],

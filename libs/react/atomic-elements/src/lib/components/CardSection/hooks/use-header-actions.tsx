@@ -1,10 +1,10 @@
-import { Widget, WidgetScope, WidgetTypes } from '@kleeen/types';
+import { Widget, WidgetScope } from '@kleeen/types';
 import { useEffect, useState } from 'react';
 
 import { ActionsDropdown } from '../components/actions-dropdown/actions-dropdown';
 import { getInvestigationSimpleActions } from '@kleeen/react/hooks';
 import { isNotNilOrEmpty } from '@kleeen/common/utils';
-import { isTableWidget } from '@kleeen/frontend/utils';
+import { isTableWidget } from '@kleeen/widgets';
 
 interface UseHeaderActionsProps {
   widget: Widget;

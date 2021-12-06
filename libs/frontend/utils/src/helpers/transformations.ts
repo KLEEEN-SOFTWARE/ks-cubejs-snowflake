@@ -19,7 +19,7 @@ export function isCountTransformations(transformation: Transformation) {
 }
 
 export function isNumericType(attr: Attribute) {
-  return attr?.format?.isNumericType || FilterForNumerics.includes(attr?.statisticalType);
+  return attr?.format?.isNumericType || FilterForNumerics.includes(attr?.statisticalType || '');
 }
 
 export function isSameAttribute(attr1: Attribute, attr2: Attribute) {
@@ -34,5 +34,5 @@ export function isSingleCardinalityDataPoint(dataPoint: DataPoint): boolean {
   // TODO @cafe THIS MUST BE REMOVED ONCE WE GET RID OF THE AGGREGATION VS TRANSFORMATION DILEMMA.
   const { transformationKeyToUse = DEFAULT_TRANSFORMATION_KEY_TO_USE } = dataPoint;
   const attributeTransformation = path<Transformation>([transformationKeyToUse], dataPoint.attribute);
-  return singleCardinalityTransformations.includes(attributeTransformation);
+  return singleCardinalityTransformations.includes(attributeTransformation as Transformation);
 }

@@ -100,7 +100,7 @@ export const widgets = [
         id: 42857,
         isDisplayValue: false,
         isNullable: false,
-        label: `net paid ship tax`,
+        label: `net paid + ship + tax`,
         multiple: true,
         name: `netPaidShipTax`,
         prototypeId: 42833,

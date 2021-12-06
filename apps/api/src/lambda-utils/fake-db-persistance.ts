@@ -14,7 +14,7 @@ function isAnUpdateRequest(operationName: string): boolean {
 }
 
 export function tryToCreateDatabase(operationName: string): void {
-  if (!KAPI_DB_PATH) throw 'KAPI_DB_PATH is not defined';
+  if (!KAPI_DB_PATH) throw new Error('KAPI_DB_PATH is not defined');
 
   if (isTryingToCreateTheDatabase(operationName)) {
     fs.mkdirSync(KAPI_DB_PATH, { recursive: true });

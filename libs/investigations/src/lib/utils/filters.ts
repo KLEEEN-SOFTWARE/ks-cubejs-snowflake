@@ -1,4 +1,4 @@
-import { Filters, Maybe, Transformation, WidgetScope } from '@kleeen/types';
+import { Filters, Maybe, Transformation, Widget, WidgetScope } from '@kleeen/types';
 import {
   GetContextDataPointFiltersArgs,
   GetContextFilters,
@@ -10,7 +10,6 @@ import {
   WidgetsWithFilters,
 } from './filters.types';
 
-import { LibraryWidget } from '@kleeen/widgets';
 import { isSingleCardinalityTransformation } from '@kleeen/frontend/utils';
 
 export interface FilterVariants {
@@ -62,7 +61,7 @@ export function getWidgetWithFilters({
   filters,
   overridePreviousFilters = false,
   widget,
-}: GetWidgetWithFilters): LibraryWidget {
+}: GetWidgetWithFilters): Widget {
   return {
     ...widget,
     params: {
@@ -105,10 +104,8 @@ function getDataPointFilters({ dataPoint, scope }: GetDataPointFilters): Maybe<F
   };
 }
 
-function mapFilterToWidget({
-  filtersToApply,
-}: MapFilterToWidgetProps): (widget: LibraryWidget) => LibraryWidget {
-  return (widget: LibraryWidget) => {
+function mapFilterToWidget({ filtersToApply }: MapFilterToWidgetProps): (widget: Widget) => Widget {
+  return (widget: Widget) => {
     return getWidgetWithFilters({
       widget,
       filters: filtersToApply,

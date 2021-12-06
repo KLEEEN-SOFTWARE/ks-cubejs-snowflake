@@ -1,11 +1,10 @@
-import { InvestigationMetadata } from '@kleeen/types';
-import { LibraryWidget } from '@kleeen/widgets';
+import { InvestigationMetadata, Widget } from '@kleeen/types';
 
 export interface ResolvedInvestigationMetadata extends InvestigationMetadata {
   cardLevel: number;
   otherSolutions?: string[]; // TODO: Improve this naming
 }
 
-export interface WidgetWithMetadata extends LibraryWidget {
+export interface WidgetWithMetadata extends Widget {
   metadata: ResolvedInvestigationMetadata;
 }

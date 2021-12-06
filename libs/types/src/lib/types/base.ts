@@ -101,6 +101,7 @@ export interface LabelResultsReturnProps extends ResultsProps {
   resultsElement: ReactElement;
 }
 
+// TODO: @cafe deprecate this in favor of DataPointValue
 export interface ListItem {
   displayValue: string;
   id?: string;

@@ -64,8 +64,6 @@ export class ApiManufacturer extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('manufacturer');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { manufacturer: { displayValue: string; value?: any } }) => ({
-      ...obj.manufacturer,
-    }));
+    return results.map((obj) => ({ ...obj.manufacturer }));
   }
 }

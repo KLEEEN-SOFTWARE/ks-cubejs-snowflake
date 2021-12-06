@@ -64,8 +64,6 @@ export class ApiContactEmail extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('contactEmail');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { contactEmail: { displayValue: string; value?: any } }) => ({
-      ...obj.contactEmail,
-    }));
+    return results.map((obj) => ({ ...obj.contactEmail }));
   }
 }

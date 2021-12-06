@@ -5,7 +5,7 @@ import { WidgetHeaderProps } from './widget-header.model';
 import { useHeaderGranularity } from '../../hooks';
 import { useStyles } from './widget-header.styles';
 
-function WidgetHeaderBase({ actions, icon, title, widget }: WidgetHeaderProps): JSX.Element {
+function WidgetHeaderBase({ actions, hasTooltip, icon, title, widget }: WidgetHeaderProps): JSX.Element {
   const classes = useStyles();
 
   const GranularityDropdown = useHeaderGranularity({
@@ -30,7 +30,12 @@ function WidgetHeaderBase({ actions, icon, title, widget }: WidgetHeaderProps): 
           sections: [
             {
               component: (
-                <KsTitle className={classes.widgetHeaderTitle} icon={icon as string} title={title} />
+                <KsTitle
+                  className={classes.widgetHeaderTitle}
+                  hasTooltip={hasTooltip}
+                  icon={icon as string}
+                  title={title}
+                />
               ),
               endSeparator: isBarSeparator,
             },

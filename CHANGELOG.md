@@ -1,3 +1,73 @@
+# [4.1.0](https://github.com/KLEEEN-SOFTWARE/template/compare/4.0.0...4.1.0) (2021-12-01)
+
+
+### Bug Fixes
+
+* **preview-panel-header:** fix title width ([#1400](https://github.com/KLEEEN-SOFTWARE/template/issues/1400)) ([c5680c8](https://github.com/KLEEEN-SOFTWARE/template/commit/c5680c87f2582a1cef6fc4490c1d91520ef91248))
+
+
+### Features
+
+* **middleware:** add nestjs foundation ([#1396](https://github.com/KLEEEN-SOFTWARE/template/issues/1396)) ([b375237](https://github.com/KLEEEN-SOFTWARE/template/commit/b375237ad5174ec5cfbb3c1ca7667df96069ac05))
+
+# [4.0.0](https://github.com/KLEEEN-SOFTWARE/template/compare/3.7.0...4.0.0) (2021-11-30)
+
+
+### Features
+
+* **things-lib:** dummy commit to trigger a major version bump ([#1402](https://github.com/KLEEEN-SOFTWARE/template/issues/1402)) ([a105929](https://github.com/KLEEEN-SOFTWARE/template/commit/a1059296cc236dac327c4e0fdbb966fbc65daa33))
+
+
+### BREAKING CHANGES
+
+* **things-lib:** new path for end-product-things library
+
+# [3.7.0](https://github.com/KLEEEN-SOFTWARE/template/compare/3.6.0...3.7.0) (2021-11-30)
+
+
+### Bug Fixes
+
+* **investigation:** add defensive validations to the use get display value hook ([#1397](https://github.com/KLEEEN-SOFTWARE/template/issues/1397)) ([30ddde2](https://github.com/KLEEEN-SOFTWARE/template/commit/30ddde2bcf85ad5a07a53783b4e33d11649f7685))
+* **investigation:** add header context to the main widget card [KSE3-4843] ([#1391](https://github.com/KLEEEN-SOFTWARE/template/issues/1391)) ([c21a40f](https://github.com/KLEEEN-SOFTWARE/template/commit/c21a40fcb9598e189ae6daa6ed40bc7ce4819504))
+* **investigation:** dispatch actions with confirmation required ([#1395](https://github.com/KLEEEN-SOFTWARE/template/issues/1395)) ([ce09439](https://github.com/KLEEEN-SOFTWARE/template/commit/ce094390bfed718782548d019cf152397068f6a6))
+* **libs:** use concrete types for the widgets definition ([#1392](https://github.com/KLEEEN-SOFTWARE/template/issues/1392)) ([65066b8](https://github.com/KLEEEN-SOFTWARE/template/commit/65066b888b9d650133114e3be33c435509b834d6))
+
+
+### Features
+
+* **actions:** unified custom action component [KSE3-4812] ([#1383](https://github.com/KLEEEN-SOFTWARE/template/issues/1383)) ([1d45687](https://github.com/KLEEEN-SOFTWARE/template/commit/1d456873d5313231b4e38331416bbc01d5e56732))
+* **timestamp-relative-dropdown:** add new RelativeDateDropdown ([#1394](https://github.com/KLEEEN-SOFTWARE/template/issues/1394)) ([7bb8a92](https://github.com/KLEEEN-SOFTWARE/template/commit/7bb8a925b85c25f1ae3e4b17bd0535d86527f49c))
+
+# [3.6.0](https://github.com/KLEEEN-SOFTWARE/template/compare/3.5.0...3.6.0) (2021-11-22)
+
+
+### Bug Fixes
+
+* **app:** add some export-to-git fixes ([#1351](https://github.com/KLEEEN-SOFTWARE/template/issues/1351)) ([20e76d2](https://github.com/KLEEEN-SOFTWARE/template/commit/20e76d283307037afff5b6a33f754bd577da203b))
+* **cloud:** Add special characters in Things ([#1385](https://github.com/KLEEEN-SOFTWARE/template/issues/1385)) ([020bc4e](https://github.com/KLEEEN-SOFTWARE/template/commit/020bc4e3a95266dd6ac82c953eeaf90bba65aa38))
+* **glass-light:** fix misspell in hsl color ([#1374](https://github.com/KLEEEN-SOFTWARE/template/issues/1374)) ([8a74037](https://github.com/KLEEEN-SOFTWARE/template/commit/8a74037c841003e7c7649f81748a786df8388311))
+* **investigation:** improve state management on Investigation filters [KSE3-4855, KSE3-4895]  ([#1378](https://github.com/KLEEEN-SOFTWARE/template/issues/1378)) ([f1321d1](https://github.com/KLEEEN-SOFTWARE/template/commit/f1321d122902f6809cdcc5c483ca05ff38bff064))
+* **ts-config:** add allowJs to base TS-Config ([#1382](https://github.com/KLEEEN-SOFTWARE/template/issues/1382)) ([3f0d73c](https://github.com/KLEEEN-SOFTWARE/template/commit/3f0d73cd115a6ca4dbf58547cd3aeabc0cc4f91d))
+* **virtualized-table-props-model:** remove unused import ([#1369](https://github.com/KLEEEN-SOFTWARE/template/issues/1369)) ([fb60f62](https://github.com/KLEEEN-SOFTWARE/template/commit/fb60f6275b094d35d81fa967fd635e908c8fe6de))
+* **widget-title:** height of widget headers ([#1370](https://github.com/KLEEEN-SOFTWARE/template/issues/1370)) ([3602f8f](https://github.com/KLEEEN-SOFTWARE/template/commit/3602f8f2eea521977b796315665d62377df3a80d))
+* **widgets-tooltips:** disable tooltips for insights widget headers ([#1364](https://github.com/KLEEEN-SOFTWARE/template/issues/1364)) ([a066601](https://github.com/KLEEEN-SOFTWARE/template/commit/a066601b8abebe5669d81efe9335029f6ef84949))
+
+
+### Features
+
+* **actions-dropdown:** Label for actions dropdown [KSE33-4888] ([969cf50](https://github.com/KLEEEN-SOFTWARE/template/commit/969cf507712e3101cf1348732312b3f6db9c5e1c))
+* **investigation:** summary widgets take precedence when opening cards ([#1377](https://github.com/KLEEEN-SOFTWARE/template/issues/1377)) ([2eb0496](https://github.com/KLEEEN-SOFTWARE/template/commit/2eb049623856c59dd9c507e8079893d9167b1c40))
+* **libs:** add strict mode to elements lib ([#1372](https://github.com/KLEEEN-SOFTWARE/template/issues/1372)) ([419765b](https://github.com/KLEEEN-SOFTWARE/template/commit/419765bb70b4bd271c87aabda7ff15c8d30a9c17))
+* **preview-panel:** the dropdown are visible in preview panel header ([#1375](https://github.com/KLEEEN-SOFTWARE/template/issues/1375)) ([d9b8e3e](https://github.com/KLEEEN-SOFTWARE/template/commit/d9b8e3e997112038b993a8671701f578fb43101a))
+* **preview-panel:** the dropdown are visible in preview panel header ([#1381](https://github.com/KLEEEN-SOFTWARE/template/issues/1381)) ([b6e9731](https://github.com/KLEEEN-SOFTWARE/template/commit/b6e973118bee8c09cd7178a04b5ba7dcef3a76af))
+
+# [3.5.0](https://github.com/KLEEEN-SOFTWARE/template/compare/3.4.0...3.5.0) (2021-11-19)
+
+
+### Features
+
+* **virtual-table:** Improved data update [KSE3-4901] ([#1384](https://github.com/KLEEEN-SOFTWARE/template/issues/1384)) ([c04aba6](https://github.com/KLEEEN-SOFTWARE/template/commit/c04aba6dc8619a0124ea6f2c1758a6bb27f6c5c8))
+
 # [3.4.0](https://github.com/KLEEEN-SOFTWARE/template/compare/3.3.2...3.4.0) (2021-11-15)
 
 

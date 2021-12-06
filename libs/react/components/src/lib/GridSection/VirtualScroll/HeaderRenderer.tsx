@@ -1,4 +1,4 @@
-import { Attribute, GenericFunction, ReactElement } from '@kleeen/types';
+import { Attribute, DEBOUNCE_WAIT, GenericFunction } from '@kleeen/types';
 import { Order, isNilOrEmpty } from '@kleeen/common/utils';
 
 import { GridSectionHeaderProps } from '../GridSection.model';
@@ -21,6 +21,7 @@ export type HeaderRendererProps = GridSectionHeaderProps & {
   newAttributes?: Attribute[];
   setInputValue?: setVirtualizedTableInputValue;
   inputValues?: string | number | Record<string, never>;
+  isLoading?: boolean;
 };
 
 export const headerRenderer = ({
@@ -29,6 +30,7 @@ export const headerRenderer = ({
   handleChange,
   hasActions,
   inputValues,
+  isLoading = false,
   newAttributes,
   onSort,
   order,
@@ -63,7 +65,7 @@ export const headerRenderer = ({
                   debouncedFn = _.debounce(() => {
                     const { value } = e.target;
                     handleChange(attribute.name, value);
-                  }, 300);
+                  }, DEBOUNCE_WAIT);
                 }
                 debouncedFn();
               }}
@@ -77,24 +79,35 @@ export const headerRenderer = ({
             />
           </Tooltip>
         </div>
-        <IconSort onSort={onSort} name={attribute.name} orderBy={orderBy} order={order} />
+        <IconSort
+          isLoading={isLoading}
+          name={attribute.name}
+          onSort={onSort}
+          order={order}
+          orderBy={orderBy}
+        />
       </div>
     </TableCell>
   );
 };
 
 interface IconSortProps {
-  onSort: GenericFunction;
+  isLoading: boolean;
   name: string;
-  orderBy: string;
+  onSort: GenericFunction;
   order: Order;
+  orderBy: string;
 }
 
-function IconSort({ onSort, name, orderBy, order }: IconSortProps) {
-  const classAppend = classnames('sort-icon', { show: orderBy === name });
+function IconSort({ isLoading, name, onSort, order, orderBy }: IconSortProps) {
+  const classAppend = classnames('sort-icon', { show: orderBy === name }, { disabled: isLoading });
+
+  function dispatchOnClick() {
+    if (!isLoading) onSort(name);
+  }
 
   return (
-    <div className={classAppend} onClick={() => onSort(name)}>
+    <div className={classAppend} onClick={dispatchOnClick}>
       <Icon icon={iconBySortDirection[order]} />
     </div>
   );

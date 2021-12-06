@@ -285,6 +285,12 @@ export function transformGroupBy({ groupBy, list }: TransformGroupByProps): numb
   return list;
 }
 
+export function getCrossLinking(hasCrosslinking: boolean, value) {
+  if (!hasCrosslinking) return [];
+
+  return value.transformation === Transformation.SelfMulti ? value.idList : value.idList?.[0];
+}
+
 //#region Private members
 function uniqByKeepFirst(list: FakeDataEntity[]): FakeDataEntity[] {
   const seen = new Set();

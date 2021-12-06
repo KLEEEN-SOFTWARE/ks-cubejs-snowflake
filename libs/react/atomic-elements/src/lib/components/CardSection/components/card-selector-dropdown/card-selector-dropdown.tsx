@@ -35,7 +35,7 @@ export function CardSelectorDropdown({ selectCardOptions }: CardSelectorDropdown
 
   return (
     <KsDropDown
-      headerSection="app.cardSelector.headerSection"
+      headerTranslationId="app.cardSelector.headerSection"
       options={selectCardOptions}
       placement="bottom-start"
       styles={{

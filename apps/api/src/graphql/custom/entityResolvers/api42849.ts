@@ -64,8 +64,6 @@ export class ApiAgeBracket extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('ageBracket');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { ageBracket: { displayValue: string; value?: any } }) => ({
-      ...obj.ageBracket,
-    }));
+    return results.map((obj) => ({ ...obj.ageBracket }));
   }
 }

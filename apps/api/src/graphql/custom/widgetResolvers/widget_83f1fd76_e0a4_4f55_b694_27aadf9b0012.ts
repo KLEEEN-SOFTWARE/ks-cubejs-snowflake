@@ -1,5 +1,4 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
-import { Snowflake } from '../dataSources/snowflake';
 
 // Widget Summary
 // Widget: Items with Lowest Inventory
@@ -9,44 +8,36 @@ export const widget_83f1fd76_e0a4_4f55_b694_27aadf9b0012 = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {
-  const dataSource = new Snowflake();
+  // KAPI - Integration
 
-  try {
-    await dataSource.connect();
-    const rows = (await dataSource.execute({
-      sqlText: `
-    select
-        I_ITEM_SK,
-        I_PRODUCT_NAME,
-        I_BRAND,
-        INV_QUANTITY_ON_HAND
-    from
-        INVENTORY
-        inner join ITEM on
-            INVENTORY.INV_ITEM_SK = ITEM.I_ITEM_SK
-    WHERE
-        INV_QUANTITY_ON_HAND IS NOT NULL
-    ORDER BY INV_QUANTITY_ON_HAND
-    LIMIT 100;
-`,
-    })) as unknown[];
+  // In order for you to connect your backend, you can add in here your code
+  // that fetch the corresponding API data.
 
-    const data = dataSource.transformToViz(rows, {
-      crossLinking: 'I_PRODUCT_NAME',
-      category: 'I_PRODUCT_NAME',
-      value: 'INV_QUANTITY_ON_HAND',
-      xAxis: { key: 'item', type: 'string' },
-      yAxis: { key: 'quantityOnHand', type: 'number' },
-    });
-    return data;
-  } catch (error) {
-    console.error(error);
-    return error;
-  } finally {
-    try {
-      await dataSource.disconnect();
-    } catch (error) {
-      console.log(`An error occurred trying to disconnect.`, error);
-    }
-  }
+  // You can access the token, data sources, and the current user through the 'context' param.
+
+  // Please replace the default return statement ('not implemented') with the
+  // required widget response, e.g.
+  // const format = {
+  //   xAxis: {
+  //     type: 'datetime', // The type of the attribute, usually datetime for x axis.
+  //     key: 'yourAttribute',
+  //     isNumericType: true, // True or false depending on the type
+  //   },
+  //   yAxis: {
+  //     type: 'string', // String or any other KAPI type, depending on your attribute
+  //     key: 'yourAttribute',
+  //     isNumericType: false, // True or false depending on the type
+  //   },
+  // };
+  // return fetch('http://put.your.api.here/your-resource') // Fetch is available through npm package node-fetch
+  //   .then((http_response) => http_response.json()) // Extracts the JSON body content from the http response.
+  //   .then((res) => {
+  //     return { format, res };
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     return 'not implemented';
+  //   });
+
+  return 'not implemented';
 };

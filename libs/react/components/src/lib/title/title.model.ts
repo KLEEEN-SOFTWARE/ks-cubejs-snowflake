@@ -9,6 +9,7 @@ export enum KsTitleMaxWidthEnum {
 export interface KsTitleProps {
   className?: string;
   displayMedia?: DisplayMedia;
+  hasTooltip?: boolean;
   icon?: string;
   isMainTitle?: boolean;
   subTitle?: string | ReactElement;

@@ -5,6 +5,7 @@ export * from './composite-component';
 export * from './date-time-picker';
 export * from './field-text-autocomplete';
 export * from './radio-group';
+export * from './relative-date-dropdown';
 export * from './select-text-autocomplete';
 export * from './switch-field';
 export * from './token-field-text';

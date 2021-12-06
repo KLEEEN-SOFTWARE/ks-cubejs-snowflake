@@ -64,6 +64,6 @@ export class ApiNetProfit extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('netProfit');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { netProfit: { displayValue: string; value?: any } }) => ({ ...obj.netProfit }));
+    return results.map((obj) => ({ ...obj.netProfit }));
   }
 }

@@ -7,7 +7,7 @@ export interface Action {
     params: VizParams;
   })[];
   areYouSure: boolean;
-  component?: CustomWidget | undefined;
+  component?: string | CustomWidget | undefined;
   description?: string;
   displayName: string;
   id?: string;

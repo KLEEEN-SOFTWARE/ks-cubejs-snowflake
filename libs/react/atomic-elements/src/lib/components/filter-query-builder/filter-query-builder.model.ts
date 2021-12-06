@@ -1,12 +1,5 @@
-import { FilterQuery, Thing, Translate } from '@kleeen/types';
+import { FilterQueryBuilderSectionProps } from '../filter-query-builder-section/filter-query-builder-section.model';
 
-export interface FilterQueryBuilderProps {
-  attributes: Thing[];
-  filterQuery: FilterQuery;
-  onFilter: (filterQuery: FilterQuery) => void;
-  translate: Translate;
-}
+export type FilterQueryBuilderProps = FilterQueryBuilderSectionProps;
 
-export type FilterQueryBuilderActionsProps = Pick<FilterQueryBuilderProps, 'onFilter' | 'translate'>;
-
-export type FilterQueryBuilderRowsProps = Pick<FilterQueryBuilderProps, 'translate'>;
+export type FilterQueryBuilderActionsProps = FilterQueryBuilderSectionProps;

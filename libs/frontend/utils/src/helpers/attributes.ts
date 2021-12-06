@@ -1,4 +1,4 @@
-import { Attribute, CellInteraction, ColumnData, Link, WidgetScope } from '@kleeen/types';
+import { Attribute, CellInteraction, ColumnData, Link, Transformation, WidgetScope } from '@kleeen/types';
 import { DEFAULT_TRANSFORMATION_KEY_TO_USE, isSingleCardinalityTransformation } from './transformations';
 
 import { crosslinkingInteractionType } from '@kleeen/types';
@@ -22,7 +22,7 @@ export function isFilterableAttribute({
 
   // TODO @cafe THIS MUST BE REMOVED ONCE WE GET RID OF THE AGGREGATION VS TRANSFORMATION DILEMMA.
   const attributeTransformation = pathOr(
-    attribute?.aggregation,
+    attribute?.aggregation as Transformation,
     [DEFAULT_TRANSFORMATION_KEY_TO_USE],
     attribute,
   );

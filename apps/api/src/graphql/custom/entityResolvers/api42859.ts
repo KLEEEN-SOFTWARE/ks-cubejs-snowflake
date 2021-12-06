@@ -64,8 +64,6 @@ export class ApiDiscountGiven extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('discountGiven');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { discountGiven: { displayValue: string; value?: any } }) => ({
-      ...obj.discountGiven,
-    }));
+    return results.map((obj) => ({ ...obj.discountGiven }));
   }
 }

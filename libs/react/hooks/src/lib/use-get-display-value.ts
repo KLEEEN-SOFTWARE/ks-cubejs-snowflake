@@ -24,37 +24,44 @@ export function useGetDisplayValue({
   formatType?: string;
   objectValue: string;
   taskName: string;
-}): { displayValue: string; format: FormatProps } {
+}): { displayValue: string; objectValueId: string; format?: FormatProps } {
   const attributes = [{ name: objectValue, aggregation: 'noAggregation' }];
-
-  const { getRequest } = useKleeenActions(taskName);
+  const { getRequest } = useKleeenActions(taskName) || {};
   const widgetData: WidgetDataType = useKleeenContext(taskName);
   const { paramsBasedOnRoute } = useUrlQueryParams();
 
+  if (isNilOrEmpty(taskName) || isNilOrEmpty(objectValue)) {
+    return { displayValue: '', objectValueId: '' };
+  }
+
   const getDisplayValue = pathOr('', ['entity', objectValue, 'displayValue']);
+  const getObjectValueId = pathOr('', ['entity', objectValue, 'id']);
   const geStatusVersion = pathOr('', ['status', 'version']);
   const format = pathOr({}, ['data', 'format', objectValue], widgetData);
 
   const displayValue = getDisplayValue(widgetData);
   const statusVersion = geStatusVersion(widgetData);
+  const objectValueId = getObjectValueId(widgetData);
 
   const entityValue = paramsBasedOnRoute[camelcase(objectValue)];
 
   useEffect(() => {
     if (isNilOrEmpty(entityValue)) return;
 
-    getRequest({
-      entity: objectValue,
-      params: {
-        attributes,
-        baseModel: objectValue,
-        formatType,
-        id: entityValue,
-        taskName,
-        value: entityValue,
-      },
-    });
-  }, [objectValue, taskName, entityValue, statusVersion]);
+    if (!displayValue) {
+      getRequest({
+        entity: objectValue,
+        params: {
+          attributes,
+          baseModel: objectValue,
+          formatType,
+          id: entityValue,
+          taskName,
+          value: entityValue,
+        },
+      });
+    }
+  }, [displayValue, entityValue, objectValue, statusVersion, taskName]);
 
-  return { displayValue, format };
+  return { displayValue, objectValueId, format };
 }

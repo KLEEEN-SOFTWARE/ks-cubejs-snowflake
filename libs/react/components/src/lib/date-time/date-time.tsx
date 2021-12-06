@@ -2,17 +2,17 @@ import './date-time.scss';
 
 import { DateTimeFormat, convertToMoment } from '@kleeen/i18n';
 import React, { useEffect, useState } from 'react';
-import { pathOr } from 'ramda';
 
 import DateFnsUtils from '@date-io/moment';
 import { DateTimePicker } from './components';
 import { DateTimeProps } from './date-time.model';
 import { KUIConnect } from '@kleeen/core-react';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import moment from 'moment';
-import { useStyles } from './date-time.styles';
 import { Maybe } from '@kleeen/types';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MuiTooltip from '@material-ui/core/Tooltip';
+import moment from 'moment';
+import { pathOr } from 'ramda';
+import { useStyles } from './date-time.styles';
 
 function DateTimeBase({ translate, ...props }: DateTimeProps): JSX.Element {
   const classes = useStyles();
@@ -50,6 +50,9 @@ function DateTimeBase({ translate, ...props }: DateTimeProps): JSX.Element {
   );
 }
 
+/**
+ * @deprecated Use the KsDatePicker instead
+ */
 export const DateTime = React.memo(KUIConnect(({ translate }) => ({ translate }))(DateTimeBase));
 
 function useDefaultDateTimeValue({

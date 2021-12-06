@@ -64,6 +64,6 @@ export class ApiItemClass extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('itemClass');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { itemClass: { displayValue: string; value?: any } }) => ({ ...obj.itemClass }));
+    return results.map((obj) => ({ ...obj.itemClass }));
   }
 }

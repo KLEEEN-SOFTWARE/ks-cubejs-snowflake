@@ -1,8 +1,7 @@
 import { FormControl, Tooltip } from '@material-ui/core';
 import { KsDropDownProps, KsMenuProps } from './drop-down.model';
-import { KsMenuContainer, KsMenuItem } from '../menu';
+import { KsMenuContainer, KsMenuItem, KsMenuItemHeader } from '../menu';
 import { KsSvgIcon, KsSvgIconSize } from '../svg-icon';
-import { MenuItemHeader, useStyles } from './drop-down.style';
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 
@@ -16,6 +15,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MuiPopper from '@material-ui/core/Popper';
 import { Translate } from '@kleeen/core-react';
 import classnames from 'classnames';
+import { useStyles } from './drop-down.style';
 
 export function KsFloatMenu({
   accessKey = 'menu-item-key',
@@ -23,7 +23,8 @@ export function KsFloatMenu({
   className,
   handleClose,
   handleOnClick,
-  headerSection,
+  headerSectionLabel,
+  headerTranslationId,
   open,
   options,
   placement,
@@ -34,6 +35,7 @@ export function KsFloatMenu({
 }: KsMenuProps): ReactElement {
   const classes = useStyles();
   const style = syncWidth ? { width: anchorEl.offsetWidth } : {};
+  const hasHeaderSection = Boolean(headerTranslationId || headerSectionLabel);
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -52,12 +54,12 @@ export function KsFloatMenu({
             style={{ transformOrigin: popperPlacement === 'bottom' ? 'center top' : 'center bottom' }}
           >
             <KsMenuContainer className={className} variant="outlined" square>
-              {headerSection && (
-                <MenuItemHeader>
+              {hasHeaderSection && (
+                <KsMenuItemHeader>
                   <span className={classes.truncate}>
-                    <Translate id={headerSection} type="html" />
+                    {headerSectionLabel || <Translate id={headerTranslationId} type="html" />}
                   </span>
-                </MenuItemHeader>
+                </KsMenuItemHeader>
               )}
               <MenuList className={styles?.dropDownMenu} data-testid="ks-dropdown-menu">
                 {options?.map((item) => (
@@ -102,7 +104,8 @@ export function KsDropDown({
   accessKey,
   dataTestId = 'drop-down',
   handleOnClick,
-  headerSection,
+  headerSectionLabel,
+  headerTranslationId,
   hideIcon = false,
   options,
   placement = 'bottom',
@@ -180,7 +183,8 @@ export function KsDropDown({
           handleClose={() => {
             setOpen(false);
           }}
-          headerSection={headerSection}
+          headerSectionLabel={headerSectionLabel}
+          headerTranslationId={headerTranslationId}
           open={open}
           options={options}
           placement={placement}

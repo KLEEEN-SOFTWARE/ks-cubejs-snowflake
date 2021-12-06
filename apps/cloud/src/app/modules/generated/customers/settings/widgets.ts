@@ -46,7 +46,7 @@ export const widgets = [
             id: 42846,
             isDisplayValue: false,
             isNullable: false,
-            label: `country mailing`,
+            label: `country ( mailing )`,
             multiple: true,
             name: `countryMailing`,
             prototypeId: 42534,

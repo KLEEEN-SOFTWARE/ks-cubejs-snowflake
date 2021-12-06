@@ -1,20 +1,17 @@
 import { KsBadge, KsButtonText, KsSvgIcon } from '@kleeen/react/components';
+import React, { useState } from 'react';
+import { useFilterQuery, useFilterQueryActions } from '../filter-section/hooks';
 
 import { FilterQuery } from '@kleeen/types';
+import { FilterQueryBuilder } from '../filter-query-builder';
 import { FilterQueryBuilderSectionProps } from './filter-query-builder-section.model';
-import { KUIConnect } from '@kleeen/core-react';
-import { KsFilterQueryBuilder } from '@kleeen/react/atomic-elements';
-import { Menu } from './filter-query-builder.styles';
-import React from 'react';
+import { Menu } from './filter-query-builder-section.styles';
 import { useTheme } from '@kleeen/react/hooks';
 
-function BaseFilterQueryBuilderSection({
-  attributes,
-  filterQuery,
-  onFilter,
-  translate,
-}: FilterQueryBuilderSectionProps) {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+export function FilterQueryBuilderSection({ onFilter }: FilterQueryBuilderSectionProps) {
+  const { filterQuery, initialFilterQuery } = useFilterQuery();
+  const { reset } = useFilterQueryActions();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const { themeClass } = useTheme();
 
   const open = Boolean(anchorEl);
@@ -26,6 +23,7 @@ function BaseFilterQueryBuilderSection({
   function handleFilter(query: FilterQuery) {
     onFilter(query);
     handleClose();
+    reset(initialFilterQuery);
   }
 
   function handleOpen(event: React.MouseEvent<HTMLElement, MouseEvent>) {
@@ -56,19 +54,10 @@ function BaseFilterQueryBuilderSection({
           }}
         >
           <div>
-            <KsFilterQueryBuilder
-              attributes={attributes}
-              filterQuery={filterQuery}
-              onFilter={handleFilter}
-              translate={translate}
-            />
+            <FilterQueryBuilder onFilter={handleFilter} />
           </div>
         </Menu>
       )}
     </>
   );
 }
-
-export const FilterQueryBuilderSection = KUIConnect(({ translate }) => ({ translate }))(
-  BaseFilterQueryBuilderSection,
-);

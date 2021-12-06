@@ -7,6 +7,9 @@ export const styles = () =>
       position: 'absolute',
       bottom: 0,
     },
+    infiniteLoaderRefreshData: {
+      width: '100%',
+    },
     flexContainer: {
       display: 'flex',
       alignItems: 'center',
@@ -199,6 +202,10 @@ export const styles = () =>
             '& .kui-icon': {
               color: 'var(--table-header-text)',
             },
+          },
+          '& .sort-icon.disabled': {
+            cursor: 'not-allowed',
+            opacity: '0.4',
           },
         },
         '& .header-item:hover': {

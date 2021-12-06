@@ -64,6 +64,6 @@ export class ApiPromotion extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('promotion');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { promotion: { displayValue: string; value?: any } }) => ({ ...obj.promotion }));
+    return results.map((obj) => ({ ...obj.promotion }));
   }
 }

@@ -64,6 +64,6 @@ export class ApiGender extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('gender');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { gender: { displayValue: string; value?: any } }) => ({ ...obj.gender }));
+    return results.map((obj) => ({ ...obj.gender }));
   }
 }

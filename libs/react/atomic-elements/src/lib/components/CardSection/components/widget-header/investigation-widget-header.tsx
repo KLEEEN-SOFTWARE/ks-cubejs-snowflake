@@ -1,41 +1,36 @@
 import { DataPointValue, InvestigationWidget, Thing, TranslateProps, WidgetScope } from '@kleeen/types';
 import { KsSubNav, KsTitle } from '@kleeen/react/components';
-import { useCardSelector, useHeaderActions, useHeaderFilters, useHeaderGranularity } from '../../hooks';
+import { useHeaderActions, useHeaderCards, useHeaderFilters, useHeaderGranularity } from '../../hooks';
 
 import { KUIConnect } from '@kleeen/core-react';
 import { WidgetHeaderProps } from './widget-header.model';
-import { getIconByWidgetType } from '@kleeen/frontend/utils';
+import { getIconByWidgetType } from '@kleeen/widgets';
 import { getThingByName } from '@kleeen/things';
+import { useState } from 'react';
 import { useStyles } from './widget-header.styles';
 
+const startSectionStyles = {
+  alignItems: 'center',
+  display: 'flex',
+  height: '100%',
+  // FIXME: @marimba this hack should be removed once the KSE3-4787 is done
+  minWidth: 0,
+  justifyContent: 'space-between',
+  paddingRight: 'var(--pm-3XS)',
+};
+
+export const InvestigationWidgetHeader = KUIConnect(({ formatMessage, translate }) => ({
+  formatMessage,
+  translate,
+}))(InvestigationWidgetHeaderBase);
+
 function InvestigationWidgetHeaderBase({ actions, formatMessage, translate, widget }: WidgetHeaderProps) {
+  const ActionsDropdown = useHeaderActions({ widget });
+  const CardsDropdown = useHeaderCards({ widget });
+  const Filters = useHeaderFilters({ widget });
+  const GranularityDropdown = useHeaderGranularity({ actions, widget });
+  const [widgetFocus] = useState<Thing | null>(() => getThingByName(widget?.entityName));
   const classes = useStyles();
-  const widgetFocus = getThingByName(widget.entityName);
-
-  const FilterPicker = useHeaderFilters({
-    widget,
-  });
-
-  const GranularityDropdown = useHeaderGranularity({
-    actions,
-    widget,
-  });
-
-  const ActionsDropdown = useHeaderActions({
-    widget,
-  });
-
-  const CardSelector = useCardSelector({ widget });
-
-  const startSectionStyles = {
-    alignItems: 'center',
-    display: 'flex',
-    height: '100%',
-    // FIXME: @marimba this hack should be removed once the KSE3-4787 is done
-    minWidth: 0,
-    justifyContent: 'space-between',
-    paddingRight: 'var(--pm-3XS)',
-  };
 
   const investigationStartSection = {
     flexNumber: 1,
@@ -49,19 +44,18 @@ function InvestigationWidgetHeaderBase({ actions, formatMessage, translate, widg
               title={getTitle({ formatMessage, translate, widget, widgetFocus })}
               upText={widget.title}
             />
-            {CardSelector}
+            {CardsDropdown}
           </div>
         ),
         endSeparator: true,
       },
     ],
   };
-
   const investigationCenterSection = {
     flexNumber: 0,
     sections: [
       {
-        component: FilterPicker,
+        component: Filters,
         endSeparator: false,
       },
       {
@@ -70,7 +64,6 @@ function InvestigationWidgetHeaderBase({ actions, formatMessage, translate, widg
       },
     ],
   };
-
   const investigationEndSection = {
     flexNumber: 0,
     sections: [
@@ -96,17 +89,7 @@ interface GetTitleProps extends TranslateProps {
   widgetFocus: Thing;
 }
 
-//#region Private Members
-function getTitle({ formatMessage, translate, widget, widgetFocus }: GetTitleProps): string {
-  return widget.scope === WidgetScope.Single
-    ? generateSingleWidgetTitle(widget?.focusDataPointValue)
-    : generateCollectionWidgetTitle({ formatMessage, translate, widgetFocus });
-}
-
-function generateSingleWidgetTitle(widgetFocusedDataPointValue: DataPointValue): string {
-  return widgetFocusedDataPointValue?.displayValue?.toString();
-}
-
+//#region Private members
 function generateCollectionWidgetTitle({
   formatMessage,
   translate,
@@ -117,9 +100,14 @@ function generateCollectionWidgetTitle({
 
   return formatMessage({ id: translationKey }, { thing });
 }
-//#endregion
 
-export const InvestigationWidgetHeader = KUIConnect(({ formatMessage, translate }) => ({
-  formatMessage,
-  translate,
-}))(InvestigationWidgetHeaderBase);
+function generateSingleWidgetTitle(widgetFocusedDataPointValue: DataPointValue): string {
+  return widgetFocusedDataPointValue?.displayValue?.toString();
+}
+
+function getTitle({ formatMessage, translate, widget, widgetFocus }: GetTitleProps): string {
+  return widget.scope === WidgetScope.Single
+    ? generateSingleWidgetTitle(widget?.focusDataPointValue)
+    : generateCollectionWidgetTitle({ formatMessage, translate, widgetFocus });
+}
+//#endregion

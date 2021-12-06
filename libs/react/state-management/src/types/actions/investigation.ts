@@ -1,14 +1,14 @@
-import { InvestigationCustomAction } from '@kleeen/types';
-import { LibraryWidget } from '@kleeen/widgets';
+import { InvestigationCustomAction, Widget } from '@kleeen/types';
+
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export type AddWidget = {
   type: string;
-} & PayloadAction<LibraryWidget>;
+} & PayloadAction<Widget>;
 
 export type InitializeWidgets = {
   type: string;
-} & PayloadAction<LibraryWidget[]>;
+} & PayloadAction<Widget[]>;
 
 export type CustomAction = {
   type: string;

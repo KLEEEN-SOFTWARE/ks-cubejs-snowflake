@@ -1,7 +1,6 @@
 import { Action, InvestigationCustomAction } from '@kleeen/types';
 import {
   ActionDialogProps,
-  ActionDialogsConditionProps,
   ActionsDropdownProps,
   GenerateCustomActionPayloadArgs,
 } from './actions-dropdown.model';
@@ -31,13 +30,24 @@ const AnchorElement = forwardRef(({ translate, setOpen }: InputElementProps, ref
   );
 });
 
-function ActionsDropdownComponent({ actionsName, taskName, translate, widget }: ActionsDropdownProps) {
+function ActionsDropdownComponent({
+  actionsName,
+  formatMessage,
+  taskName,
+  translate,
+  widget,
+}: ActionsDropdownProps) {
   const accessKey = 'investigate-actions';
   const [actionDialog, setActionDialog] = useState<ActionDialogProps>();
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isCustomOpen, setIsCustomOpen] = useState(false);
+
   const { dispatchCustomAction } = useKleeenActions(actionsName);
 
-  const { actions, entityName, entityId, id: widgetId } = widget;
+  const { actions, entityName, entityId, id: widgetId, focusDataPointValue } = widget;
   const dataPointId = pathOr('', ['params', 'filters', widget.entityName], widget);
+
+  const widgetFocusDataPoint = focusDataPointValue?.displayValue?.toString() || entityName;
 
   const [actionsAsOptions] = useState(
     actions?.map(({ name, displayName, ...rest }) => ({
@@ -64,59 +74,66 @@ function ActionsDropdownComponent({ actionsName, taskName, translate, widget }: 
       widgetId,
     });
 
-    if (action.areYouSure) {
+    if (action.component) {
       setActionDialog({ action, dataCustomAction });
+      setIsCustomOpen(true);
+      return;
+    } else if (action.areYouSure) {
+      setActionDialog({ action, dataCustomAction });
+      setIsConfirmationOpen(true);
       return;
     }
 
     dispatchCustomAction(dataCustomAction);
   }
 
+  function handleIsConfirmationOpenChange(): void {
+    setIsConfirmationOpen(!isConfirmationOpen);
+  }
+
+  function handleIsCustomOpenChange(): void {
+    setIsCustomOpen(!isCustomOpen);
+  }
+
+  function handleDispatchAction(action: Action, e: MouseEvent): void {
+    const isCustomDialogOpen = isCustomOpen;
+    const needsConfirmation = action?.areYouSure;
+
+    if (isCustomDialogOpen && needsConfirmation) {
+      setIsConfirmationOpen(true);
+    } else {
+      e.preventDefault();
+      dispatchCustomAction(actionDialog.dataCustomAction);
+    }
+  }
+  const key = `${actionDialog?.action?.name}-dialogs`;
+
   return (
     <>
       <KsDropDown
+        headerSectionLabel={formatMessage(
+          { id: 'app.investigation.actionsContextMenuHeader' },
+          { dataPoint: widgetFocusDataPoint },
+        )}
         accessKey={accessKey}
         handleOnClick={handleClick}
         options={actionsAsOptions}
         translate={translate}
         InputElement={AnchorElement}
       />
-      <ConfirmationDialog
-        actionDialog={actionDialog}
-        setActionDialog={setActionDialog}
-        dispatchCustomAction={dispatchCustomAction}
-        taskName={taskName}
-      />
+      {!isNilOrEmpty(actionDialog) && (
+        <ActionDialogs
+          action={actionDialog?.action}
+          dispatchAction={handleDispatchAction}
+          isConfirmationOpen={isConfirmationOpen}
+          isCustomOpen={isCustomOpen}
+          key={key}
+          onIsConfirmationOpenChange={handleIsConfirmationOpenChange}
+          onIsCustomOpenChange={handleIsCustomOpenChange}
+          taskName={taskName}
+        />
+      )}
     </>
-  );
-}
-
-function ConfirmationDialog({
-  actionDialog,
-  dispatchCustomAction,
-  setActionDialog,
-  taskName,
-}: ActionDialogsConditionProps) {
-  if (isNilOrEmpty(actionDialog)) return null;
-
-  const { action, dataCustomAction } = actionDialog;
-
-  const key = `${action.name}-dialogs`;
-
-  const handleOnChange = () => setActionDialog(null);
-  const handleDispatchAction = () => dispatchCustomAction(dataCustomAction);
-
-  return (
-    <ActionDialogs
-      action={action}
-      dispatchAction={handleDispatchAction}
-      isConfirmationOpen
-      isCustomOpen
-      key={key}
-      onIsConfirmationOpenChange={handleOnChange}
-      onIsCustomOpenChange={handleOnChange}
-      taskName={taskName}
-    />
   );
 }
 
@@ -142,4 +159,6 @@ function generateCustomActionPayload({
   return dataCustomAction;
 }
 
-export const ActionsDropdown = KUIConnect(({ translate }) => ({ translate }))(ActionsDropdownComponent);
+export const ActionsDropdown = KUIConnect(({ formatMessage, translate }) => ({ formatMessage, translate }))(
+  ActionsDropdownComponent,
+);

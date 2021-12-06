@@ -64,8 +64,6 @@ export class ApiNetPaidShipTax extends RESTDataSource {
   async getAutoCompleteValues(entity: AutoCompleteParams) {
     const results = await KapiCrud.list('netPaidShipTax');
     // TODO: @guaria generate missing attributes
-    return results.map((obj: { netPaidShipTax: { displayValue: string; value?: any } }) => ({
-      ...obj.netPaidShipTax,
-    }));
+    return results.map((obj) => ({ ...obj.netPaidShipTax }));
   }
 }

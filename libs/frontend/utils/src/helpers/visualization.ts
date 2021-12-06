@@ -1,4 +1,4 @@
-import { Attribute, DataPoint } from '@kleeen/types';
+import { Attribute, DataPoint, DataPointValue } from '@kleeen/types';
 
 import Highcharts from 'highcharts';
 import { isNilOrEmpty } from '@kleeen/common/utils';
@@ -14,7 +14,7 @@ export function getDataPointsFromHighchartsEventClick({
   event,
 }: GetDataPointsFromHighchartsEventClick): DataPoint[] {
   const [firstAttribute, secondAttribute] = attributes;
-  const value = firstAttribute && path(['point', 'options', firstAttribute.name], event);
+  const value = firstAttribute && path<DataPointValue>(['point', 'options', firstAttribute.name], event);
 
   if (isNilOrEmpty(value)) return [];
 
@@ -26,7 +26,7 @@ export function getDataPointsFromHighchartsEventClick({
   ];
 
   if (!isNilOrEmpty(secondAttribute)) {
-    const contextValue = path(['point', 'options', secondAttribute.name], event);
+    const contextValue = path<DataPointValue>(['point', 'options', secondAttribute.name], event);
 
     if (!isNilOrEmpty(contextValue)) {
       dataPoints.push({

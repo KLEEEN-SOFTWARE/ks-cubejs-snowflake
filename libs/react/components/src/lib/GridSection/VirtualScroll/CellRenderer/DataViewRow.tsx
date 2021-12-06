@@ -1,17 +1,18 @@
-import { Action } from '@kleeen/types';
-import { DataViewRowProps } from './CellRenderer.model';
-import { get } from 'lodash';
-import { getRowDisplayValue, overwriteFormat } from '@kleeen/common/utils';
-import { KsSimpleContextCell } from '../../../context-cell/simple-context-cell';
 import { MemoizeActions, validateOrderColum } from './utils';
+import { getRowDisplayValue, overwriteFormat } from '@kleeen/common/utils';
+
+import { Action } from '@kleeen/types';
+import ConfirmForm from '../../ConfirmForm';
+import { DataViewRowProps } from './CellRenderer.model';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import { KsSimpleContextCell } from '../../../context-cell/simple-context-cell';
+import React from 'react';
 import { RowData } from '../../../config-table';
 import { SortableHandle } from 'react-sortable-hoc';
 import { TableCell } from '../../components/index';
-import { useStyles } from './CellRenderer.styles';
 import classNames from 'classnames';
-import ConfirmForm from '../../ConfirmForm';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import React from 'react';
+import { get } from 'lodash';
+import { useStyles } from './CellRenderer.styles';
 
 const DragHandle = SortableHandle(({ children }) => <div>{children}</div>);
 
@@ -119,6 +120,7 @@ function DataViewRow({
             isDeletable={isDeletable}
             localization={localization}
             row={rowData as RowData}
+            rowDisplayValue={rowDisplayValue}
           />
         )}
       </React.Fragment>

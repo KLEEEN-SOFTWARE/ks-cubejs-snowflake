@@ -29,6 +29,7 @@ function MuiVirtualizedTable(props: MuiVirtualizedTableProps): any {
     handleOnColumnSort,
     headerStyles,
     infiniteLoaderProps,
+    isLoading,
     isLoadingMoreRows,
     isSyncingColumns,
     listingModalSettings,
@@ -66,6 +67,8 @@ function MuiVirtualizedTable(props: MuiVirtualizedTableProps): any {
             const headerRowRenderer = getHeaderRowRenderer({
               helperClass: `${themeClass} ${headerStyles['dragging-column-helper-styles']}`,
               handleOnColumnSort,
+              isLoading,
+              loaderRefreshClass: classes.infiniteLoaderRefreshData,
             });
 
             const columnsMap = columnsMapFunction({

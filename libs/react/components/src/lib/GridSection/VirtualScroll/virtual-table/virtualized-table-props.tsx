@@ -1,15 +1,15 @@
-import { arrayMove } from 'react-sortable-hoc';
 import { Attribute, CellInteraction, ColumnData, ColumnDataExtended } from '@kleeen/types';
-import { bem } from './VirtualizedTable';
+import { Column, TableCellProps, TableHeaderProps, TableProps } from 'react-virtualized';
 import {
   ColumnsMapFunctionArgs,
-  defaultProps,
   GetHeaderRenderArgs,
   GetSimpleTablePropsArgs,
   GetSortablePropsArgs,
-  initialModelSettings,
   SortableTableProps,
+  defaultProps,
+  initialModelSettings,
 } from './virtualized-table-props.model';
+import { getCellFormatResults, useInfiniteScrollFunctions } from './utils';
 import {
   useAvailableFiltersByWorkflow,
   useCrosslinkingInteraction,
@@ -18,22 +18,22 @@ import {
   useTheme,
   useUserInfo,
 } from '@kleeen/react/hooks';
-import { getCellFormatResults, useInfiniteScrollFunctions } from './utils';
 
-import { Column, TableCellProps, TableHeaderProps, TableProps } from 'react-virtualized';
+import CellRenderer from '../CellRenderer';
+import { ListingModalSettings } from '@kleeen/react/components';
+import { MuiVirtualizedTableProps } from '../VirtualScroll.model';
+import ReactDOM from 'react-dom';
+import { arrayMove } from 'react-sortable-hoc';
+import { bem } from './VirtualizedTable';
+import classnames from 'classnames';
 import { get } from 'lodash';
 import { getCellInteraction } from '@kleeen/frontend/utils';
 import { getRowClassName } from '../GetRowClassName';
 import { headerRenderer } from '../HeaderRenderer';
-import { ListingModalSettings } from '@kleeen/react/components';
-import { MuiVirtualizedTableProps } from '../VirtualScroll.model';
 import { overwriteFormat } from '@kleeen/common/utils';
 import { useState } from 'react';
 import { useStyles } from '../VirtualizedTable.style';
 import { useSyncColumnOrder } from '../helpers';
-import CellRenderer from '../CellRenderer';
-import classnames from 'classnames';
-import ReactDOM from 'react-dom';
 
 export const useVirtualizedTable = ({
   actions,
@@ -52,6 +52,7 @@ export const useVirtualizedTable = ({
   hasActions,
   headerHeight,
   isDeletable,
+  isLoading,
   localization,
   onCellClickFunction,
   onCellContextMenuFunction,
@@ -90,7 +91,11 @@ export const useVirtualizedTable = ({
   const { localStorageValue: columnsState, setLocalStorageValue: setColumnsState } = useLocalStorage<
     ColumnData[]
   >(keyOfLocalStorage, columns || []);
-  const { infiniteLoaderProps, isLoadingMoreRows } = useInfiniteScrollFunctions(columns, getMoreRows);
+  const { infiniteLoaderProps, isLoadingMoreRows } = useInfiniteScrollFunctions({
+    columns,
+    getMoreRows,
+    pause: isLoading,
+  });
 
   function handleOnColumnSort(oldIndex: number, newIndex: number): void {
     setColumnsState(arrayMove(columnsState, oldIndex, newIndex));
@@ -195,6 +200,7 @@ export const useVirtualizedTable = ({
         ...(newAttributes ? { newAttributes } : {}),
         ...(withInputValues ? { inputValues, setInputValue } : {}),
         columnIndex: index,
+        isLoading: isLoading || isLoadingMoreRows,
       });
 
   const getSortableTableProps = ({
@@ -293,6 +299,7 @@ export const useVirtualizedTable = ({
     handleOnColumnSort,
     headerStyles,
     infiniteLoaderProps,
+    isLoading,
     isLoadingMoreRows,
     isSyncingColumns,
     listingModalSettings,

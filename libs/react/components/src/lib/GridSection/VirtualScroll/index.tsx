@@ -12,6 +12,7 @@ import { allComponentEnum } from './CellRenderer/CellRenderer.model';
 import classnames from 'classnames';
 import useFilter from '../useFilter';
 import { useStyles } from './VirtualizedTable.style';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
 type HeaderColumns = Array<{
   attr: Attribute;
@@ -119,7 +120,7 @@ function ReactVirtualizedTableComponent({
     [setDataPoints, handleClick],
   );
 
-  if (props.entity.isLoading) return <Loader />;
+  if (props.entity.isLoading && isNilOrEmpty(props.entity.data)) return <Loader />;
 
   const amendCellUpdate: AmendCellUpdate = (params): void => {
     if (props.onCellUpdate) {
@@ -191,6 +192,7 @@ function ReactVirtualizedTableComponent({
         handleChange={handleChange}
         hasActions={hasActions}
         isDeletable={isDeletable}
+        isLoading={props.entity.isLoading}
         localization={localization}
         onAutocompleteRequest={props.onAutocompleteRequest}
         onCellClickFunction={onClickFunction}
