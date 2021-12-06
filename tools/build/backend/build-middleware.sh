@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
 
+getEnvironment () {
+  if [[ -z ${ENV} ]];
+  then
+    export ENV=${USER_BRANCH};
+  fi
+}
+
 updateBackendEnvironmentVariables () {
   echo 'Update backend environment variables'
 
@@ -16,9 +23,13 @@ updateBackendEnvironmentVariables () {
 }
 
 export ACCOUNT_ID='yrwgnww'
-export ENV=${USER_BRANCH}
+getEnvironment
+
+echo ${ENV}
+
 export PRODUCT_ID='rwmozjk'
 export PROJECT_NAME=${ACCOUNT_ID}-${PRODUCT_ID}-${ENV}
+echo "The PROJECT_NAME= ${PROJECT_NAME}"
 
 echo 'Set environment variables'
 
