@@ -1,4 +1,6 @@
-import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
+import { AuthContext, DataAggregationArgs, GetWidgetDataResult } from '../../../types';
+
+import { Snowflake } from '../dataSources/snowflake';
 
 // Widget Summary
 // Widget: Purchase Locations
@@ -8,36 +10,42 @@ export const widget_c9d539e7_a88c_4d3f_a237_6ae4f8de0327 = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {
-  // KAPI - Integration
+  const dataSource = new Snowflake();
 
-  // In order for you to connect your backend, you can add in here your code
-  // that fetch the corresponding API data.
+  try {
+    await dataSource.connect();
+    const rows = (await dataSource.execute({
+      sqlText: `
+    select
+        DISTINCT CA_STATE,
+        count(WEB_SALES.WS_ORDER_NUMBER) as PURCHASES_BY_LOCATION
+    from
+        WEB_SALES
+        inner join CUSTOMER_ADDRESS on
+            WEB_SALES.WS_SHIP_ADDR_SK = CUSTOMER_ADDRESS.CA_ADDRESS_SK
+    //Order by WS_SOLD_DATE_SK DESC
+    group by
+        CA_STATE
+`,
+    })) as unknown[];
 
-  // You can access the token, data sources, and the current user through the 'context' param.
+    const data = dataSource.transformToViz(rows, {
+      crossLinking: 'CA_STATE',
+      category: 'CA_STATE',
+      value: 'PURCHASES_BY_LOCATION',
+      xAxis: { key: 'stateMailing', type: 'string' },
+      yAxis: { key: 'sale', type: 'string' },
+    });
 
-  // Please replace the default return statement ('not implemented') with the
-  // required widget response, e.g.
-  // const format = {
-  //   xAxis: {
-  //     type: 'datetime', // The type of the attribute, usually datetime for x axis.
-  //     key: 'yourAttribute',
-  //     isNumericType: true, // True or false depending on the type
-  //   },
-  //   yAxis: {
-  //     type: 'string', // String or any other KAPI type, depending on your attribute
-  //     key: 'yourAttribute',
-  //     isNumericType: false, // True or false depending on the type
-  //   },
-  // };
-  // return fetch('http://put.your.api.here/your-resource') // Fetch is available through npm package node-fetch
-  //   .then((http_response) => http_response.json()) // Extracts the JSON body content from the http response.
-  //   .then((res) => {
-  //     return { format, res };
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     return 'not implemented';
-  //   });
-
-  return 'not implemented';
+    return data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  } finally {
+    try {
+      await dataSource.disconnect();
+    } catch (error) {
+      console.log(`An error occurred trying to disconnect.`, error);
+    }
+  }
 };
