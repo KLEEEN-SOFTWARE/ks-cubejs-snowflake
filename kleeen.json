@@ -1664,8 +1664,8 @@
     "workspace.json"
   ],
   "exclude": {
-    "directories": [],
-    "files": []
+    "directories": ["apps/api/src/graphql/custom/"],
+    "files": ["README.md"]
   },
   "packageApplied": {
     "name": "template",
